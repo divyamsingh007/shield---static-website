@@ -6,6 +6,7 @@ import {
   Link,
   useLocation,
 } from "react-router-dom";
+import { ClerkProvider } from "@clerk/clerk-react";
 import "./App.css";
 import CardNav from "./components/CardNav";
 
@@ -16,6 +17,11 @@ import Domains from "./pages/Domains";
 import Activities from "./pages/Activities";
 import Team from "./pages/Team";
 import Contact from "./pages/Contact";
+
+const CLERK_PUBLISHABLE_KEY =
+  import.meta.env.VITE_CLERK_PUBLISHABLE_KEY ||
+  import.meta.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY ||
+  "pk_test_YXdhaXRlZC1jYW1lbC00ODc2LmNsZXJrLmFjY291bnRzLmRldiQ";
 
 const ScrollToTop = () => {
   const { pathname } = useLocation();
@@ -59,20 +65,21 @@ const navItems = [
 
 function App() {
   return (
-    <BrowserRouter>
-      <ScrollToTop />
-      <div className="relative min-h-screen bg-neutral-950 flex flex-col">
-        <div className="fixed top-0 w-full z-9999">
-          <CardNav
-            logoAlt="SHIELD"
-            items={navItems}
-            baseColor="#000"
-            menuColor="#fff"
-            buttonBgColor="#61dca3"
-            buttonTextColor="#000"
-            ease="power3.out"
-          />
-        </div>
+    <ClerkProvider publishableKey={CLERK_PUBLISHABLE_KEY}>
+      <BrowserRouter>
+        <ScrollToTop />
+        <div className="relative min-h-screen bg-neutral-950 flex flex-col">
+          <div className="fixed top-0 w-full z-9999">
+            <CardNav
+              logoAlt="SHIELD"
+              items={navItems}
+              baseColor="#000"
+              menuColor="#fff"
+              buttonBgColor="#61dca3"
+              buttonTextColor="#000"
+              ease="power3.out"
+            />
+          </div>
 
         {/* Floating Vertical Social Bar (Right Side) */}
         <div className="fixed right-6 top-1/2 -translate-y-1/2 z-40 hidden sm:flex flex-col gap-6 bg-[#0a0a0a]/80 border border-white/10 backdrop-blur-md px-2.5 py-8 rounded-full items-center shadow-xl">
@@ -201,7 +208,8 @@ function App() {
           </div>
         </footer>
       </div>
-    </BrowserRouter>
+      </BrowserRouter>
+    </ClerkProvider>
   );
 }
 

@@ -1,9 +1,8 @@
-"use client";
-
 import { useLayoutEffect, useRef, useState } from "react";
 import { gsap } from "gsap";
 import { GoArrowUpRight } from "react-icons/go";
 import { Link, useNavigate } from "react-router-dom";
+import { SignedIn, SignedOut, SignInButton, UserButton } from "@clerk/clerk-react";
 import "./CardNav.css";
 
 const CardNav = ({
@@ -208,17 +207,52 @@ const CardNav = ({
             </Link>
           </div>
 
-          <button
-            type="button"
-            onClick={() => {
-              if (isExpanded) toggleMenu();
-              navigate("/activities#latest-events");
-            }}
-            className="card-nav-cta-button"
-            style={{ backgroundColor: buttonBgColor, color: buttonTextColor }}
-          >
-            Get Started
-          </button>
+          <div className="flex items-center gap-2.5">
+            <SignedOut>
+              <SignInButton mode="modal">
+                <button
+                  type="button"
+                  className="px-3.5 py-1.5 text-xs font-semibold text-gray-200 bg-white/10 hover:bg-white/20 border border-white/15 rounded-lg transition-all cursor-pointer"
+                >
+                  Sign In
+                </button>
+              </SignInButton>
+              <button
+                type="button"
+                onClick={() => {
+                  if (isExpanded) toggleMenu();
+                  navigate("/activities#latest-events");
+                }}
+                className="card-nav-cta-button"
+                style={{ backgroundColor: buttonBgColor, color: buttonTextColor }}
+              >
+                Get Started
+              </button>
+            </SignedOut>
+
+            <SignedIn>
+              <button
+                type="button"
+                onClick={() => {
+                  if (isExpanded) toggleMenu();
+                  navigate("/activities#latest-events");
+                }}
+                className="px-3.5 py-1.5 text-xs font-bold bg-[#61dca3] text-black rounded-lg hover:bg-[#4fbe8b] transition-colors cursor-pointer"
+              >
+                Register Event
+              </button>
+              <div className="flex items-center pl-1">
+                <UserButton
+                  showName={false}
+                  appearance={{
+                    elements: {
+                      userButtonPopoverActionButton__manageAccount: "hidden",
+                    },
+                  }}
+                />
+              </div>
+            </SignedIn>
+          </div>
         </div>
 
         <div className="card-nav-content" aria-hidden={!isExpanded}>
