@@ -274,7 +274,7 @@ const Contact = () => {
                     </div>
                     <div>
                       <span className="text-xs font-mono uppercase tracking-widest text-[#61b3dc]">Faculty Administration</span>
-                      <h3 className="text-xl font-bold text-white tracking-tight">Dr. Alan Turing</h3>
+                      <h3 className="text-xl font-bold text-white tracking-tight">Dr. Mohit Kumar</h3>
                       <p className="text-xs text-gray-400">Faculty Incharge, SHIELD</p>
                     </div>
                   </div>
@@ -284,7 +284,7 @@ const Contact = () => {
                   <div className="flex flex-col gap-3 text-sm text-gray-300">
                     <div className="flex items-center gap-3">
                       <FaEnvelope className="text-[#61dca3] shrink-0" size={16} />
-                      <a href="mailto:fi.shield@nith.ac.in" className="hover:text-white transition-colors">fi.shield@nith.ac.in</a>
+                      <a href="mailto:fi.shield@nith.ac.in" className="hover:text-white transition-colors">mohit@nith.ac.in</a>
                     </div>
                     <div className="flex items-center gap-3">
                       <FaUserGraduate className="text-[#61b3dc] shrink-0" size={16} />
@@ -299,53 +299,7 @@ const Contact = () => {
               </BorderGlow>
             </ScrollRevealCard>
 
-            {/* Society Core Contacts */}
-            <ScrollRevealCard delay={150}>
-              <BorderGlow
-                className="h-full"
-                backgroundColor="#0a0a0a"
-                glowColor="150 65 62"
-                colors={['#61dca3', '#61b3dc', '#2b4539']}
-                borderRadius={8}
-              >
-                <div className="p-6 sm:p-8 flex flex-col gap-4">
-                  <div className="flex items-center justify-between">
-                    <div className="flex items-center gap-3">
-                      <FaShieldHalved size={22} className="text-[#61dca3]" />
-                      <h3 className="text-lg font-bold text-white tracking-tight">Society Secretariate</h3>
-                    </div>
-                  </div>
-
-                  <div className="h-px bg-white/10 my-1"></div>
-
-                  <div className="flex flex-col gap-3 text-sm text-gray-300">
-                    <div className="flex items-center gap-3">
-                      <FaEnvelope className="text-[#61dca3] shrink-0" size={16} />
-                      <div>
-                        <span className="block text-xs text-gray-500 font-mono">Official Email</span>
-                        <a href="mailto:shield@nith.ac.in" className="hover:text-white font-medium transition-colors">shield@nith.ac.in</a>
-                      </div>
-                    </div>
-
-                    <div className="flex items-center gap-3">
-                      <FaPhone className="text-[#61b3dc] shrink-0" size={16} />
-                      <div>
-                        <span className="block text-xs text-gray-500 font-mono">Secretariate Phone</span>
-                        <span className="font-medium">+91 1972 254 000</span>
-                      </div>
-                    </div>
-
-                    <div className="flex items-center gap-3">
-                      <FaClock className="text-[#61dca3] shrink-0" size={16} />
-                      <div>
-                        <span className="block text-xs text-gray-500 font-mono">Lab Hours</span>
-                        <span className="font-medium">Mon - Sat: 5:00 PM - 9:00 PM</span>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </BorderGlow>
-            </ScrollRevealCard>
+            
 
             {/* Social Hub Links Card */}
             <ScrollRevealCard delay={300}>

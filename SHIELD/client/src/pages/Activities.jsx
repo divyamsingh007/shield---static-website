@@ -321,7 +321,7 @@ const Activities = () => {
                     Date & Time
                   </span>
                   <span className="text-gray-200 font-mono text-sm">
-                    Oct 24, 2026 • 10:00 AM
+                    Oct 02, 2029 • 10:00 AM
                   </span>
                 </div>
                 <div className="flex flex-col">

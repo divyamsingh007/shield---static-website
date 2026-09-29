@@ -182,12 +182,6 @@ function App() {
                 >
                   Contact Us
                 </Link>
-                <Link
-                  to="/contact"
-                  className="text-gray-400 hover:text-[#61dca3] transition-colors text-sm"
-                >
-                  Join the Society
-                </Link>
               </div>
             </div>
           </div>
