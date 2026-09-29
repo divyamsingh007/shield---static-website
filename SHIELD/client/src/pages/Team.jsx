@@ -36,30 +36,58 @@ const ScrollRevealCard = ({ children, delay = 0 }) => {
 // ─── Team Data ───────────────────────────────────────────────
 const teamData = {
   faculty: [
-    { name: "Dr. Alan Turing", role: "Faculty Incharge", id: "FAC-001", image: "https://api.dicebear.com/9.x/avataaars/svg?seed=Alan&backgroundColor=b6e3f4" },
+    { name: "Dr.Mohit Kumar", role: "Faculty Incharge", id: "FAC-001", image: "https://upload.wikimedia.org/wikipedia/commons/8/89/Portrait_Placeholder.png?utm_source=commons.wikimedia.org&utm_campaign=index&utm_content=original" },
   ],
   assistantFaculty: [
-    { name: "Dr. Grace Hopper", role: "Asst. Faculty Incharge", id: "FAC-002", image: "https://api.dicebear.com/9.x/avataaars/svg?seed=Grace&backgroundColor=c0aede" },
+    { name: "Dr. Grace Hopper", role: "Asst. Faculty Incharge", id: "FAC-002", image:"https://upload.wikimedia.org/wikipedia/commons/8/89/Portrait_Placeholder.png?utm_source=commons.wikimedia.org&utm_campaign=index&utm_content=original" },
   ],
-  finalYear: [
-    { name: "Marcus Phoenix", role: "President", id: "21BCS001", image: "https://api.dicebear.com/9.x/avataaars/svg?seed=Marcus&backgroundColor=ffdfbf" },
-    { name: "Anya Stroud", role: "Vice President", id: "21BCS002", image: "https://api.dicebear.com/9.x/avataaars/svg?seed=Anya&backgroundColor=d1d4f9" },
-    { name: "Dominic Santiago", role: "Technical Head", id: "21BCS003", image: "https://api.dicebear.com/9.x/avataaars/svg?seed=Dom&backgroundColor=b6e3f4" },
-    { name: "Damon Baird", role: "Operations Head", id: "21BCS004", image: "https://api.dicebear.com/9.x/avataaars/svg?seed=Baird&backgroundColor=c0aede" },
-  ],
+
+ super_finalYear: [
+    { name: "Avisheet Srivastava", role: "Founder", id: "22BDCS005", image: "https://upload.wikimedia.org/wikipedia/commons/8/89/Portrait_Placeholder.png?utm_source=commons.wikimedia.org&utm_campaign=index&utm_content=original" },
+    { name: "Abhimanyu Singh", role: "Founder", id: "22DCS001", image: "https://upload.wikimedia.org/wikipedia/commons/8/89/Portrait_Placeholder.png?utm_source=commons.wikimedia.org&utm_campaign=index&utm_content=original" },
+    { name: "Kunal Dhiman", role: "Founder", id: "22DCS012", image: "https://upload.wikimedia.org/wikipedia/commons/8/89/Portrait_Placeholder.png?utm_source=commons.wikimedia.org&utm_campaign=index&utm_content=original" },
+    { name: "Sankalp Gupta", role: "Founder", id: "22DCS023", image: "https://upload.wikimedia.org/wikipedia/commons/8/89/Portrait_Placeholder.png?utm_source=commons.wikimedia.org&utm_campaign=index&utm_content=original" },
+    
+    { name: "Shibhu", role: "Founder", id: "22DCS026", image: "https://upload.wikimedia.org/wikipedia/commons/8/89/Portrait_Placeholder.png?utm_source=commons.wikimedia.org&utm_campaign=index&utm_content=original" },],
+    finalYear:[
+      { name: "Nimish Saxena", role: "Coordinator", id: "23BEC068", image: "https://upload.wikimedia.org/wikipedia/commons/8/89/Portrait_Placeholder.png?utm_source=commons.wikimedia.org&utm_campaign=index&utm_content=original" },
+    
+  
+    ],
+  
   thirdYear: [
-    { name: "Elena Fisher", role: "Events Head", id: "22BCS001", image: "https://api.dicebear.com/9.x/avataaars/svg?seed=Elena&backgroundColor=ffdfbf" },
-    { name: "Nathan Drake", role: "PR Head", id: "22BCS002", image: "https://api.dicebear.com/9.x/avataaars/svg?seed=Nathan&backgroundColor=b6e3f4" },
-    { name: "Chloe Frazer", role: "Design Head", id: "22BCS003", image: "https://api.dicebear.com/9.x/avataaars/svg?seed=Chloe&backgroundColor=c0aede" },
-    { name: "Victor Sullivan", role: "Content Head", id: "22BCS004", image: "https://api.dicebear.com/9.x/avataaars/svg?seed=Victor&backgroundColor=d1d4f9" },
+    { name: "Ankit Kumar", role: "Domain Lead", id: "24BCS018", image: "https://upload.wikimedia.org/wikipedia/commons/8/89/Portrait_Placeholder.png?utm_source=commons.wikimedia.org&utm_campaign=index&utm_content=original" },
+    { name: "Divyam Singh Duhoon", role: "Domain Lead", id: "24BCS041", image: "https://upload.wikimedia.org/wikipedia/commons/8/89/Portrait_Placeholder.png?utm_source=commons.wikimedia.org&utm_campaign=index&utm_content=original" },
+    { name: "Rajat Aggarwal", role: "Domain Lead", id: "24BCS090", image: "https://upload.wikimedia.org/wikipedia/commons/8/89/Portrait_Placeholder.png?utm_source=commons.wikimedia.org&utm_campaign=index&utm_content=original" },
+    { name: "Ravi Kumar Verma", role: "Domain Lead", id: "24BCS096", image: "https://upload.wikimedia.org/wikipedia/commons/8/89/Portrait_Placeholder.png?utm_source=commons.wikimedia.org&utm_campaign=index&utm_content=original" },
+    { name: "Aditya Chhimpa", role: "Domain Lead", id: "24BEC007", image: "https://upload.wikimedia.org/wikipedia/commons/8/89/Portrait_Placeholder.png?utm_source=commons.wikimedia.org&utm_campaign=index&utm_content=original" },
+    { name: "Abhayraj Mishra", role: "Domain Lead", id: "24BME002", image: "https://upload.wikimedia.org/wikipedia/commons/8/89/Portrait_Placeholder.png?utm_source=commons.wikimedia.org&utm_campaign=index&utm_content=original" },
+    { name: "Aditya", role: "Domain Lead", id: "24BME005", image: "https://upload.wikimedia.org/wikipedia/commons/8/89/Portrait_Placeholder.png?utm_source=commons.wikimedia.org&utm_campaign=index&utm_content=original" },
   ],
+
+
+  
   secondYear: [
-    { name: "Lara Croft", role: "Member", id: "23BCS001", image: "https://api.dicebear.com/9.x/avataaars/svg?seed=Lara&backgroundColor=ffdfbf" },
-    { name: "Sam Fisher", role: "Member", id: "23BCS002", image: "https://api.dicebear.com/9.x/avataaars/svg?seed=Sam&backgroundColor=b6e3f4" },
-    { name: "Aiden Pearce", role: "Member", id: "23BCS003", image: "https://api.dicebear.com/9.x/avataaars/svg?seed=Aiden&backgroundColor=c0aede" },
-    { name: "Faith Connors", role: "Member", id: "23BCS004", image: "https://api.dicebear.com/9.x/avataaars/svg?seed=Faith&backgroundColor=d1d4f9" },
-    { name: "Gordon Freeman", role: "Member", id: "23BCS005", image: "https://api.dicebear.com/9.x/avataaars/svg?seed=Gordon&backgroundColor=ffdfbf" },
-  ]
+    { name: "Abanshika Sharma", role: "Executive", id: "25BCS003", image: "https://upload.wikimedia.org/wikipedia/commons/8/89/Portrait_Placeholder.png?utm_source=commons.wikimedia.org&utm_campaign=index&utm_content=original" },
+    { name: "Ansh Barnwal", role: "Executive", id: "25BCS026", image: "https://upload.wikimedia.org/wikipedia/commons/8/89/Portrait_Placeholder.png?utm_source=commons.wikimedia.org&utm_campaign=index&utm_content=original" },
+    { name: "Karan Yadav", role: "Executive", id: "25BCS059", image: "https://upload.wikimedia.org/wikipedia/commons/8/89/Portrait_Placeholder.png?utm_source=commons.wikimedia.org&utm_campaign=index&utm_content=original" },
+    { name: "Komal", role: "Executive", id: "25BCS063", image: "https://upload.wikimedia.org/wikipedia/commons/8/89/Portrait_Placeholder.png?utm_source=commons.wikimedia.org&utm_campaign=index&utm_content=original" },
+    { name: "Mayank", role: "Executive", id: "25BCS073", image: "https://upload.wikimedia.org/wikipedia/commons/8/89/Portrait_Placeholder.png?utm_source=commons.wikimedia.org&utm_campaign=index&utm_content=original" },
+    { name: "Rohit Bambar", role: "Executive", id: "25BCS091", image: "https://upload.wikimedia.org/wikipedia/commons/8/89/Portrait_Placeholder.png?utm_source=commons.wikimedia.org&utm_campaign=index&utm_content=original" },
+    
+    { name: "Tanuj Kumar", role: "Executive", id: "25BEC106", image: "https://upload.wikimedia.org/wikipedia/commons/8/89/Portrait_Placeholder.png?utm_source=commons.wikimedia.org&utm_campaign=index&utm_content=original" },
+    { name: "Mayank", role: "Executive", id: "25BEE066", image: "https://upload.wikimedia.org/wikipedia/commons/8/89/Portrait_Placeholder.png?utm_source=commons.wikimedia.org&utm_campaign=index&utm_content=original" }, 
+    { name: "Nikhil Acharya", role: "Executive", id: "25BME025", image: "https://upload.wikimedia.org/wikipedia/commons/8/89/Portrait_Placeholder.png?utm_source=commons.wikimedia.org&utm_campaign=index&utm_content=original" }, 
+    { name: "Soha Khan", role: "Executive", id: "25BME046", image: "https://upload.wikimedia.org/wikipedia/commons/8/89/Portrait_Placeholder.png?utm_source=commons.wikimedia.org&utm_campaign=index&utm_content=original" },
+    { name: "Suyash Singh", role: "Executive", id: "25BME048", image: "https://upload.wikimedia.org/wikipedia/commons/8/89/Portrait_Placeholder.png?utm_source=commons.wikimedia.org&utm_campaign=index&utm_content=original" }, 
+    { name: "Dev Garg", role: "Executive", id: "25BMS014", image: "https://upload.wikimedia.org/wikipedia/commons/8/89/Portrait_Placeholder.png?utm_source=commons.wikimedia.org&utm_campaign=index&utm_content=original" },
+    { name: "Pranab Mandal", role: "Executive", id: "25BMS033", image: "https://upload.wikimedia.org/wikipedia/commons/8/89/Portrait_Placeholder.png?utm_source=commons.wikimedia.org&utm_campaign=index&utm_content=original" },
+    { name: "Nishant Singh", role: "Executive", id: "25DEC011", image: "https://upload.wikimedia.org/wikipedia/commons/8/89/Portrait_Placeholder.png?utm_source=commons.wikimedia.org&utm_campaign=index&utm_content=original" }, 
+    { name: "Yashraj Saini", role: "Executive", id: "25DEC027", image: "https://upload.wikimedia.org/wikipedia/commons/8/89/Portrait_Placeholder.png?utm_source=commons.wikimedia.org&utm_campaign=index&utm_content=original" },
+  ],
+  
+   
+  
 };
 
 // ─── Team Member Card ────────────────────────────────────────
@@ -93,11 +121,11 @@ const TeamCard = ({ member, index }) => (
         </span>
 
         {/* Social icons */}
-        <div className="flex gap-4 mb-5">
+        {/* <div className="flex gap-4 mb-5">
           <a href="#" className="text-gray-500 hover:text-[#61dca3] transition-colors"><FaGithub size={16} /></a>
           <a href="#" className="text-gray-500 hover:text-[#61b3dc] transition-colors"><FaLinkedinIn size={16} /></a>
           <a href="#" className="text-gray-500 hover:text-white transition-colors"><FaXTwitter size={16} /></a>
-        </div>
+        </div> */}
 
         {/* Divider + ID */}
         <div className="w-full border-t border-white/10 pt-4 mt-auto flex items-center justify-between">
@@ -163,29 +191,35 @@ const Team = () => {
         />
 
         {/* Assistant Faculty Incharge */}
-        <TeamSection
+        {/* <TeamSection
           label="Mentorship"
           title="Assistant Faculty Incharge"
           members={teamData.assistantFaculty}
-        />
+        /> */}
 
+        {/* Super-Final Year */}
+        <TeamSection
+          label="Batch of 2027"
+          title="Super Final Year"
+          members={teamData.super_finalYear}
+        />
         {/* Final Year */}
         <TeamSection
-          label="Batch of 2025"
+          label="Batch of 2027"
           title="Final Year"
           members={teamData.finalYear}
         />
 
         {/* Third Year */}
         <TeamSection
-          label="Batch of 2026"
+          label="Batch of 2028"
           title="Third Year"
           members={teamData.thirdYear}
         />
 
         {/* Second Year */}
         <TeamSection
-          label="Batch of 2027"
+          label="Batch of 2029"
           title="Second Year"
           members={teamData.secondYear}
         />
