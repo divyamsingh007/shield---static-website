@@ -11,15 +11,19 @@ const createPlayerDetails = () => ({
 });
 
 const branchOptions = [
-  "B.Tech CSE",
-  "B.Tech ECE",
-  "B.Tech Other",
+  "B.Tech Computer Science and Engineering",
+  "B.Tech Electronics and Communication Engineering",
+  "B.Tech Electrical Engineering",
+  "B.Tech Mechanical Engineering",
+  "B.Tech Civil Engineering",
+  "B.Tech Chemical Engineering",
+  "B.Tech Materials Science and Engineering",
+  "B.Tech Mathematics and Computing",
+  "B.Arch Architecture",
   "Dual Degree / M.Tech",
 ];
 
-const yearOptions = [
-  "1st Year",
-];
+const yearOptions = ["1st Year"];
 
 const domainOptions = [
   "Web Security",
@@ -32,21 +36,18 @@ const domainOptions = [
   "AI Security",
 ];
 
-const experienceOptions = [
-  "Complete Beginner (Curious & enthusiastic)",
-  "Novice (Basic Linux/Python/Networking)",
-  "Intermediate (Played picoCTF/OverTheWire)",
-  "Experienced (Active CTF player / Bug hunter)",
-];
-
 const NITH_EMAIL_PATTERN = String.raw`^26[a-z]{3}\d{3}@nith\.ac\.in$`;
+const REGISTER_AFTER_SIGN_IN_KEY = "shield-register-after-sign-in";
 
 const Activities = () => {
   const { hash } = useLocation();
   const { isSignedIn, user } = useUser();
 
   const [isRegisterOpen, setIsRegisterOpen] = useState(false);
+  const [openRegistrationAfterSignIn, setOpenRegistrationAfterSignIn] =
+    useState(false);
   const [playerCount, setPlayerCount] = useState(1);
+  const [teamName, setTeamName] = useState("");
   const [player1, setPlayer1] = useState({
     fullName: "",
     rollNumber: "",
@@ -74,7 +75,7 @@ const Activities = () => {
         .from("registrations")
         .select("*")
         .or(
-          `user_id.eq.${user.id},user_email.eq.${userEmail},player1_email.eq.${userEmail},player2_email.eq.${userEmail}`
+          `user_id.eq.${user.id},user_email.eq.${userEmail},player1_email.eq.${userEmail},player2_email.eq.${userEmail}`,
         )
         .order("registered_at", { ascending: false })
         .limit(1);
@@ -107,10 +108,6 @@ const Activities = () => {
           user.fullName ||
           `${user.firstName || ""} ${user.lastName || ""}`.trim() ||
           "",
-        collegeEmail:
-          prev.collegeEmail ||
-          user.primaryEmailAddress?.emailAddress ||
-          "",
       }));
     }
   }, [isSignedIn, user]);
@@ -140,11 +137,32 @@ const Activities = () => {
   }, [isRegisterOpen]);
 
   useEffect(() => {
-    if (!isSignedIn && isRegisterOpen) {
-      setIsRegisterOpen(false);
-      setIsSubmitted(false);
+    if (!isSignedIn) {
+      setExistingRegistration(null);
+
+      if (isRegisterOpen) {
+        setIsRegisterOpen(false);
+        setIsSubmitted(false);
+      }
+
+      setOpenRegistrationAfterSignIn(false);
     }
   }, [isSignedIn, isRegisterOpen]);
+
+  useEffect(() => {
+    const shouldOpenAfterSignIn =
+      openRegistrationAfterSignIn ||
+      sessionStorage.getItem(REGISTER_AFTER_SIGN_IN_KEY) === "true";
+
+    if (isSignedIn && user && shouldOpenAfterSignIn) {
+      sessionStorage.removeItem(REGISTER_AFTER_SIGN_IN_KEY);
+      setOpenRegistrationAfterSignIn(false);
+
+      if (!existingRegistration) {
+        setIsRegisterOpen(true);
+      }
+    }
+  }, [isSignedIn, user, openRegistrationAfterSignIn, existingRegistration]);
 
   // Handle fresh registration submission
   const handleRegisterSubmit = async (event) => {
@@ -159,7 +177,9 @@ const Activities = () => {
 
     const payload = {
       user_id: user.id,
-      user_email: user.primaryEmailAddress?.emailAddress || player1.collegeEmail,
+      user_email:
+        user.primaryEmailAddress?.emailAddress || player1.collegeEmail,
+      team_name: teamName,
       team_size: playerCount,
       player1_name: player1.fullName,
       player1_roll: player1.rollNumber,
@@ -184,7 +204,9 @@ const Activities = () => {
 
       if (error) {
         console.error("Supabase insert error:", error);
-        setSubmitError(error.message || "Failed to save registration to database.");
+        setSubmitError(
+          error.message || "Failed to save registration to database.",
+        );
       } else {
         if (data && data[0]) {
           setExistingRegistration(data[0]);
@@ -193,7 +215,9 @@ const Activities = () => {
       }
     } catch (err) {
       console.error("Submission error:", err);
-      setSubmitError(err.message || "An unexpected error occurred. Please try again.");
+      setSubmitError(
+        err.message || "An unexpected error occurred. Please try again.",
+      );
     } finally {
       setIsSubmitting(false);
     }
@@ -230,7 +254,10 @@ const Activities = () => {
 
       if (error) {
         console.error("Team formation error:", error);
-        setSubmitError(error.message || "Failed to update team details. Check database UPDATE permissions.");
+        setSubmitError(
+          error.message ||
+            "Failed to update team details. Check database UPDATE permissions.",
+        );
       } else {
         setPlayerCount(2);
         setExistingRegistration((prev) => ({
@@ -348,12 +375,21 @@ const Activities = () => {
                         : "bg-[#61dca3] text-neutral-950 hover:bg-[#4fbe8b] cursor-pointer"
                     }`}
                   >
-                    {existingRegistration ? "Already registered" : "Register Now"}
+                    {existingRegistration
+                      ? "Already registered"
+                      : "Register Now"}
                   </button>
                 ) : (
                   <SignInButton mode="modal">
                     <button
                       type="button"
+                      onClick={() => {
+                        sessionStorage.setItem(
+                          REGISTER_AFTER_SIGN_IN_KEY,
+                          "true",
+                        );
+                        setOpenRegistrationAfterSignIn(true);
+                      }}
                       className="px-8 py-3.5 bg-[#61dca3] text-neutral-950 font-bold rounded hover:bg-[#4fbe8b] transition-colors shadow-lg"
                     >
                       Sign In to Register
@@ -510,7 +546,8 @@ const Activities = () => {
                   <p className="text-gray-400 text-sm leading-relaxed">
                     Registered for:{" "}
                     <span className="text-white font-mono font-semibold">
-                      {existingRegistration?.player1_email || player1.collegeEmail}
+                      {existingRegistration?.player1_email ||
+                        player1.collegeEmail}
                     </span>
                   </p>
                 </div>
@@ -519,7 +556,8 @@ const Activities = () => {
                   <div className="flex justify-between">
                     <span className="text-gray-400">Team Format:</span>
                     <span className="text-white font-semibold">
-                      {existingRegistration?.team_size === 2 || playerCount === 2
+                      {existingRegistration?.team_size === 2 ||
+                      playerCount === 2
                         ? "Team (2 Players)"
                         : "Solo (1 Player)"}
                     </span>
@@ -527,14 +565,21 @@ const Activities = () => {
                   <div className="flex justify-between">
                     <span className="text-gray-400">Player 1:</span>
                     <span className="text-white font-semibold">
-                      {existingRegistration?.player1_name || player1.fullName} ({existingRegistration?.player1_roll || player1.rollNumber})
+                      {existingRegistration?.player1_name || player1.fullName} (
+                      {existingRegistration?.player1_roll || player1.rollNumber}
+                      )
                     </span>
                   </div>
-                  {(existingRegistration?.player2_name || (playerCount === 2 && player2.fullName)) && (
+                  {(existingRegistration?.player2_name ||
+                    (playerCount === 2 && player2.fullName)) && (
                     <div className="flex justify-between">
                       <span className="text-gray-400">Player 2:</span>
                       <span className="text-white font-semibold">
-                        {existingRegistration?.player2_name || player2.fullName} ({existingRegistration?.player2_roll || player2.rollNumber})
+                        {existingRegistration?.player2_name || player2.fullName}{" "}
+                        (
+                        {existingRegistration?.player2_roll ||
+                          player2.rollNumber}
+                        )
                       </span>
                     </div>
                   )}
@@ -554,9 +599,14 @@ const Activities = () => {
             ) : isLoadingReg ? (
               <div className="py-20 flex flex-col items-center justify-center gap-4 text-center">
                 <div className="w-10 h-10 border-2 border-[#61dca3] border-t-transparent rounded-full animate-spin"></div>
-                <p className="text-sm font-mono text-gray-400">Checking your registration status...</p>
+                <p className="text-sm font-mono text-gray-400">
+                  Checking your registration status...
+                </p>
               </div>
-            ) : existingRegistration && (Number(existingRegistration.team_size) === 2 || (existingRegistration.player2_name && existingRegistration.player2_name.trim() !== "")) ? (
+            ) : existingRegistration &&
+              (Number(existingRegistration.team_size) === 2 ||
+                (existingRegistration.player2_name &&
+                  existingRegistration.player2_name.trim() !== "")) ? (
               /* State 1: Already Registered with Full Team */
               <div className="space-y-6 py-4">
                 <div className="flex items-center justify-between p-4 rounded-2xl bg-emerald-500/10 border border-emerald-500/30">
@@ -565,8 +615,13 @@ const Activities = () => {
                       ✓
                     </div>
                     <div>
-                      <h4 className="text-white font-bold text-base">Already Registered with Full Team</h4>
-                      <p className="text-xs text-gray-400">Your registration is confirmed. Team formation is complete.</p>
+                      <h4 className="text-white font-bold text-base">
+                        Already Registered with Full Team
+                      </h4>
+                      <p className="text-xs text-gray-400">
+                        Your registration is confirmed. Team formation is
+                        complete.
+                      </p>
                     </div>
                   </div>
                   <span className="px-3 py-1 bg-[#61dca3]/20 text-[#61dca3] border border-[#61dca3]/40 rounded-lg text-xs font-bold uppercase tracking-wider font-mono">
@@ -578,30 +633,89 @@ const Activities = () => {
                   {/* Player 1 Card */}
                   <div className="rounded-2xl border border-white/10 bg-white/3 p-5 space-y-3">
                     <div className="flex items-center justify-between border-b border-white/10 pb-3">
-                      <span className="text-xs uppercase font-mono tracking-wider text-[#61dca3] font-bold">Player 1 (Candidate / Leader)</span>
-                      <span className="text-xs text-gray-500 font-mono">Verified</span>
+                      <span className="text-xs uppercase font-mono tracking-wider text-[#61dca3] font-bold">
+                        Player 1 (Candidate / Leader)
+                      </span>
+                      <span className="text-xs text-gray-500 font-mono">
+                        Verified
+                      </span>
                     </div>
                     <div className="space-y-2 text-sm">
-                      <div className="flex justify-between"><span className="text-gray-400">Full Name:</span><span className="text-white font-semibold">{existingRegistration.player1_name}</span></div>
-                      <div className="flex justify-between"><span className="text-gray-400">Roll Number:</span><span className="text-white font-mono">{existingRegistration.player1_roll}</span></div>
-                      <div className="flex justify-between"><span className="text-gray-400">College Email:</span><span className="text-white font-mono">{existingRegistration.player1_email}</span></div>
-                      <div className="flex justify-between"><span className="text-gray-400">Contact:</span><span className="text-white font-mono">{existingRegistration.player1_contact}</span></div>
-                      <div className="flex justify-between"><span className="text-gray-400">Branch & Year:</span><span className="text-white">{existingRegistration.branch} • {existingRegistration.year}</span></div>
-                      <div className="flex justify-between"><span className="text-gray-400">Domain:</span><span className="text-[#61b3dc]">{existingRegistration.domain}</span></div>
+                      <div className="flex justify-between">
+                        <span className="text-gray-400">Full Name:</span>
+                        <span className="text-white font-semibold">
+                          {existingRegistration.player1_name}
+                        </span>
+                      </div>
+                      <div className="flex justify-between">
+                        <span className="text-gray-400">Roll Number:</span>
+                        <span className="text-white font-mono">
+                          {existingRegistration.player1_roll}
+                        </span>
+                      </div>
+                      <div className="flex justify-between">
+                        <span className="text-gray-400">College Email:</span>
+                        <span className="text-white font-mono">
+                          {existingRegistration.player1_email}
+                        </span>
+                      </div>
+                      <div className="flex justify-between">
+                        <span className="text-gray-400">Contact:</span>
+                        <span className="text-white font-mono">
+                          {existingRegistration.player1_contact}
+                        </span>
+                      </div>
+                      <div className="flex justify-between">
+                        <span className="text-gray-400">Branch & Year:</span>
+                        <span className="text-white">
+                          {existingRegistration.branch} •{" "}
+                          {existingRegistration.year}
+                        </span>
+                      </div>
+                      <div className="flex justify-between">
+                        <span className="text-gray-400">Domain:</span>
+                        <span className="text-[#61b3dc]">
+                          {existingRegistration.domain}
+                        </span>
+                      </div>
                     </div>
                   </div>
 
                   {/* Player 2 Card */}
                   <div className="rounded-2xl border border-white/10 bg-white/3 p-5 space-y-3">
                     <div className="flex items-center justify-between border-b border-white/10 pb-3">
-                      <span className="text-xs uppercase font-mono tracking-wider text-[#61b3dc] font-bold">Player 2 (Teammate)</span>
-                      <span className="text-xs text-gray-500 font-mono">Confirmed</span>
+                      <span className="text-xs uppercase font-mono tracking-wider text-[#61b3dc] font-bold">
+                        Player 2 (Teammate)
+                      </span>
+                      <span className="text-xs text-gray-500 font-mono">
+                        Confirmed
+                      </span>
                     </div>
                     <div className="space-y-2 text-sm">
-                      <div className="flex justify-between"><span className="text-gray-400">Full Name:</span><span className="text-white font-semibold">{existingRegistration.player2_name}</span></div>
-                      <div className="flex justify-between"><span className="text-gray-400">Roll Number:</span><span className="text-white font-mono">{existingRegistration.player2_roll}</span></div>
-                      <div className="flex justify-between"><span className="text-gray-400">College Email:</span><span className="text-white font-mono">{existingRegistration.player2_email}</span></div>
-                      <div className="flex justify-between"><span className="text-gray-400">Contact:</span><span className="text-white font-mono">{existingRegistration.player2_contact}</span></div>
+                      <div className="flex justify-between">
+                        <span className="text-gray-400">Full Name:</span>
+                        <span className="text-white font-semibold">
+                          {existingRegistration.player2_name}
+                        </span>
+                      </div>
+                      <div className="flex justify-between">
+                        <span className="text-gray-400">Roll Number:</span>
+                        <span className="text-white font-mono">
+                          {existingRegistration.player2_roll}
+                        </span>
+                      </div>
+                      <div className="flex justify-between">
+                        <span className="text-gray-400">College Email:</span>
+                        <span className="text-white font-mono">
+                          {existingRegistration.player2_email}
+                        </span>
+                      </div>
+                      <div className="flex justify-between">
+                        <span className="text-gray-400">Contact:</span>
+                        <span className="text-white font-mono">
+                          {existingRegistration.player2_contact}
+                        </span>
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -616,14 +730,18 @@ const Activities = () => {
                   </button>
                 </div>
               </div>
-            ) : existingRegistration && Number(existingRegistration.team_size) === 1 && (!existingRegistration.player2_name || existingRegistration.player2_name.trim() === "") ? (
+            ) : existingRegistration &&
+              Number(existingRegistration.team_size) === 1 &&
+              (!existingRegistration.player2_name ||
+                existingRegistration.player2_name.trim() === "") ? (
               /* State 2: Registered Solo -> Only Show Team Formation (Add Player 2) */
               <form className="space-y-7" onSubmit={handleTeamFormationSubmit}>
                 <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 p-4 rounded-xl bg-[#61b3dc]/10 border border-[#61b3dc]/30 text-xs">
                   <div className="flex items-center gap-2 text-[#61b3dc] font-medium">
                     <span>ℹ️</span>
                     <span>
-                      You have registered as a Solo Candidate. Form your team by registering Player 2 below.
+                      You have registered as a Solo Candidate. Form your team by
+                      registering Player 2 below.
                     </span>
                   </div>
                   <span className="px-2.5 py-1 rounded bg-[#61b3dc]/20 text-[#61b3dc] font-mono font-bold uppercase">
@@ -637,15 +755,50 @@ const Activities = () => {
                     <span className="text-xs uppercase font-mono tracking-wider text-[#61dca3] font-bold">
                       1. Player 1 Details (Registered)
                     </span>
-                    <span className="text-xs text-gray-500 font-mono">Already Completed</span>
+                    <span className="text-xs text-gray-500 font-mono">
+                      Already Completed
+                    </span>
                   </div>
                   <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 text-xs">
-                    <div><span className="text-gray-500 block">Name:</span> <span className="text-white font-semibold">{existingRegistration.player1_name}</span></div>
-                    <div><span className="text-gray-500 block">Roll Number:</span> <span className="text-white font-mono">{existingRegistration.player1_roll}</span></div>
-                    <div><span className="text-gray-500 block">Email:</span> <span className="text-white font-mono">{existingRegistration.player1_email}</span></div>
-                    <div><span className="text-gray-500 block">Contact:</span> <span className="text-white font-mono">{existingRegistration.player1_contact}</span></div>
-                    <div><span className="text-gray-500 block">Branch & Year:</span> <span className="text-white">{existingRegistration.branch} • {existingRegistration.year}</span></div>
-                    <div><span className="text-gray-500 block">Domain:</span> <span className="text-[#61dca3]">{existingRegistration.domain}</span></div>
+                    <div>
+                      <span className="text-gray-500 block">Name:</span>{" "}
+                      <span className="text-white font-semibold">
+                        {existingRegistration.player1_name}
+                      </span>
+                    </div>
+                    <div>
+                      <span className="text-gray-500 block">Roll Number:</span>{" "}
+                      <span className="text-white font-mono">
+                        {existingRegistration.player1_roll}
+                      </span>
+                    </div>
+                    <div>
+                      <span className="text-gray-500 block">Email:</span>{" "}
+                      <span className="text-white font-mono">
+                        {existingRegistration.player1_email}
+                      </span>
+                    </div>
+                    <div>
+                      <span className="text-gray-500 block">Contact:</span>{" "}
+                      <span className="text-white font-mono">
+                        {existingRegistration.player1_contact}
+                      </span>
+                    </div>
+                    <div>
+                      <span className="text-gray-500 block">
+                        Branch & Year:
+                      </span>{" "}
+                      <span className="text-white">
+                        {existingRegistration.branch} •{" "}
+                        {existingRegistration.year}
+                      </span>
+                    </div>
+                    <div>
+                      <span className="text-gray-500 block">Domain:</span>{" "}
+                      <span className="text-[#61dca3]">
+                        {existingRegistration.domain}
+                      </span>
+                    </div>
                   </div>
                 </div>
 
@@ -664,7 +817,8 @@ const Activities = () => {
                         2. Player 2 Details (Teammate)
                       </h3>
                       <p className="text-xs text-gray-400">
-                        Enter your second team member's details to complete team formation.
+                        Enter your second team member's details to complete team
+                        formation.
                       </p>
                     </div>
                     <span className="text-xs uppercase tracking-widest text-[#61dca3] font-mono">
@@ -771,7 +925,9 @@ const Activities = () => {
                     disabled={isSubmitting}
                     className="px-7 py-3.5 rounded-xl bg-[#61dca3] text-neutral-950 font-bold transition-colors hover:bg-[#4fbe8b] disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer"
                   >
-                    {isSubmitting ? "Forming Team..." : "Form Team (Add Player 2)"}
+                    {isSubmitting
+                      ? "Forming Team..."
+                      : "Form Team (Add Player 2)"}
                   </button>
                   <button
                     type="button"
@@ -792,7 +948,9 @@ const Activities = () => {
                       <span className="w-2 h-2 rounded-full bg-[#61dca3] animate-pulse"></span>
                       <span className="text-gray-300">
                         Authenticated as:{" "}
-                        <strong className="text-white">{user.primaryEmailAddress?.emailAddress}</strong>
+                        <strong className="text-white">
+                          {user.primaryEmailAddress?.emailAddress}
+                        </strong>
                       </span>
                     </div>
                     <span className="px-2 py-0.5 rounded bg-[#61dca3]/20 text-[#61dca3] text-[10px] font-bold uppercase">
@@ -830,6 +988,25 @@ const Activities = () => {
                   <h3 className="text-lg font-semibold text-white mb-4 flex items-center gap-2">
                     <span>1. Candidate / Team Leader Details</span>
                   </h3>
+
+                  <div className="mb-5">
+                    <label
+                      htmlFor="register-team-name"
+                      className="block text-sm font-medium text-gray-300 mb-2"
+                    >
+                      Team Name *
+                    </label>
+                    <input
+                      id="register-team-name"
+                      name="teamName"
+                      type="text"
+                      required
+                      value={teamName}
+                      onChange={(event) => setTeamName(event.target.value)}
+                      placeholder="Enter your team name"
+                      className="w-full rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-white placeholder:text-gray-500 outline-none transition-colors focus:border-[#61dca3]/70 focus:bg-white/10"
+                    />
+                  </div>
 
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
                     <div>
@@ -1016,31 +1193,20 @@ const Activities = () => {
                         htmlFor="register-experience"
                         className="block text-sm font-medium text-gray-300 mb-2"
                       >
-                        Prior Experience *
+                        What interests you in cybersecurity? *
                       </label>
-                      <select
+                      <textarea
                         id="register-experience"
                         name="experience"
                         required
+                        rows={3}
                         value={player1.experience}
                         onChange={(e) =>
                           handlePlayer1Change("experience", e.target.value)
                         }
-                        className="w-full rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-white outline-none transition-colors focus:border-[#61dca3]/70 focus:bg-white/10"
-                      >
-                        <option value="" disabled>
-                          Choose your experience level
-                        </option>
-                        {experienceOptions.map((option) => (
-                          <option
-                            key={option}
-                            value={option}
-                            className="bg-[#0a0a0a]"
-                          >
-                            {option}
-                          </option>
-                        ))}
-                      </select>
+                        placeholder="Tell us what interests you in cybersecurity"
+                        className="w-full resize-none rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-white placeholder:text-gray-500 outline-none transition-colors focus:border-[#61dca3]/70 focus:bg-white/10"
+                      />
                     </div>
 
                     <div className="md:col-span-2">
@@ -1110,7 +1276,10 @@ const Activities = () => {
                             required
                             value={player2.fullName}
                             onChange={(event) =>
-                              handlePlayer2Change("fullName", event.target.value)
+                              handlePlayer2Change(
+                                "fullName",
+                                event.target.value,
+                              )
                             }
                             placeholder="Player 2 full name"
                             className="w-full rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-white placeholder:text-gray-500 outline-none transition-colors focus:border-[#61dca3]/70 focus:bg-white/10"
@@ -1131,7 +1300,10 @@ const Activities = () => {
                             required
                             value={player2.rollNumber}
                             onChange={(event) =>
-                              handlePlayer2Change("rollNumber", event.target.value)
+                              handlePlayer2Change(
+                                "rollNumber",
+                                event.target.value,
+                              )
                             }
                             placeholder="Roll number"
                             className="w-full rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-white placeholder:text-gray-500 outline-none transition-colors focus:border-[#61dca3]/70 focus:bg-white/10"
@@ -1150,8 +1322,6 @@ const Activities = () => {
                             name="player2CollegeEmail"
                             type="email"
                             required
-                            pattern={NITH_EMAIL_PATTERN}
-                            title="Use the format 26bcs041@nith.ac.in"
                             pattern={NITH_EMAIL_PATTERN}
                             title="Use the format 26bcs041@nith.ac.in"
                             value={player2.collegeEmail}
@@ -1200,7 +1370,9 @@ const Activities = () => {
                     disabled={isSubmitting}
                     className="px-7 py-3.5 rounded-xl bg-[#61dca3] text-neutral-950 font-bold transition-colors hover:bg-[#4fbe8b] disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer"
                   >
-                    {isSubmitting ? "Submitting Registration..." : "Submit Application"}
+                    {isSubmitting
+                      ? "Submitting Registration..."
+                      : "Submit Application"}
                   </button>
                   <button
                     type="button"
