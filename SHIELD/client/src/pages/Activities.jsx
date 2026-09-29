@@ -39,6 +39,8 @@ const experienceOptions = [
   "Experienced (Active CTF player / Bug hunter)",
 ];
 
+const NITH_EMAIL_PATTERN = String.raw`^26[a-z]{3}\d{3}@nith\.ac\.in$`;
+
 const Activities = () => {
   const { hash } = useLocation();
   const { isSignedIn, user } = useUser();
@@ -136,6 +138,13 @@ const Activities = () => {
     window.addEventListener("keydown", handleEscape);
     return () => window.removeEventListener("keydown", handleEscape);
   }, [isRegisterOpen]);
+
+  useEffect(() => {
+    if (!isSignedIn && isRegisterOpen) {
+      setIsRegisterOpen(false);
+      setIsSubmitted(false);
+    }
+  }, [isSignedIn, isRegisterOpen]);
 
   // Handle fresh registration submission
   const handleRegisterSubmit = async (event) => {
@@ -326,13 +335,31 @@ const Activities = () => {
               </div>
 
               <div className="pt-4">
-                <button
-                  type="button"
-                  onClick={() => setIsRegisterOpen(true)}
-                  className="px-8 py-3.5 bg-[#61dca3] text-neutral-950 font-bold rounded hover:bg-[#4fbe8b] transition-colors shadow-lg"
-                >
-                  Register Now
-                </button>
+                {isSignedIn ? (
+                  <button
+                    type="button"
+                    onClick={() => {
+                      if (!existingRegistration) setIsRegisterOpen(true);
+                    }}
+                    disabled={Boolean(existingRegistration)}
+                    className={`px-8 py-3.5 font-bold rounded transition-colors shadow-lg ${
+                      existingRegistration
+                        ? "bg-white/10 text-gray-500 cursor-not-allowed"
+                        : "bg-[#61dca3] text-neutral-950 hover:bg-[#4fbe8b] cursor-pointer"
+                    }`}
+                  >
+                    {existingRegistration ? "Already registered" : "Register Now"}
+                  </button>
+                ) : (
+                  <SignInButton mode="modal">
+                    <button
+                      type="button"
+                      className="px-8 py-3.5 bg-[#61dca3] text-neutral-950 font-bold rounded hover:bg-[#4fbe8b] transition-colors shadow-lg"
+                    >
+                      Sign In to Register
+                    </button>
+                  </SignInButton>
+                )}
               </div>
             </div>
 
@@ -418,7 +445,7 @@ const Activities = () => {
         </section>
       </div>
 
-      {isRegisterOpen && (
+      {isRegisterOpen && isSignedIn && (
         <div className="fixed inset-0 z-10000 flex items-center justify-center px-4 py-8">
           <div
             className="absolute inset-0 bg-black/80 backdrop-blur-sm"
@@ -859,11 +886,13 @@ const Activities = () => {
                         name="collegeEmail"
                         type="email"
                         required
+                        pattern={NITH_EMAIL_PATTERN}
+                        title="Use the format 26bcs041@nith.ac.in"
                         value={player1.collegeEmail}
                         onChange={(e) =>
                           handlePlayer1Change("collegeEmail", e.target.value)
                         }
-                        placeholder="you@college.edu"
+                        placeholder="26xyz123@nith.ac.in"
                         className="w-full rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-white placeholder:text-gray-500 outline-none transition-colors focus:border-[#61dca3]/70 focus:bg-white/10"
                       />
                     </div>
@@ -1121,6 +1150,10 @@ const Activities = () => {
                             name="player2CollegeEmail"
                             type="email"
                             required
+                            pattern={NITH_EMAIL_PATTERN}
+                            title="Use the format 26bcs041@nith.ac.in"
+                            pattern={NITH_EMAIL_PATTERN}
+                            title="Use the format 26bcs041@nith.ac.in"
                             value={player2.collegeEmail}
                             onChange={(event) =>
                               handlePlayer2Change(

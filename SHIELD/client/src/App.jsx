@@ -36,7 +36,7 @@ const ScrollToTop = () => {
 const navItems = [
   {
     label: "Main",
-    bgColor: "#1B1722",
+    bgColor: "#0d1b17",
     textColor: "#fff",
     links: [
       { label: "Home", href: "/", ariaLabel: "Go to Home" },
@@ -45,7 +45,7 @@ const navItems = [
   },
   {
     label: "Explore",
-    bgColor: "#2F293A",
+    bgColor: "#10202a",
     textColor: "#fff",
     links: [
       { label: "Domains", href: "/domains", ariaLabel: "Our Domains" },
@@ -54,7 +54,7 @@ const navItems = [
   },
   {
     label: "People",
-    bgColor: "#1B1722",
+    bgColor: "#0d1b17",
     textColor: "#fff",
     links: [
       { label: "Team", href: "/team", ariaLabel: "Our Team" },
