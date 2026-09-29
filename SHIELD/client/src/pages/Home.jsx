@@ -192,9 +192,6 @@ const Home = () => (
                 <p className="text-gray-400 leading-relaxed mb-8 flex-grow">
                   Join a tight-knit community of curious technologists, ethical hackers, and defensive engineers at NIT Hamirpur.
                 </p>
-                <Link to="/team" className="relative text-[#61b3dc] group-hover:text-white font-medium inline-flex items-center transition-colors pb-0.5 after:absolute after:bottom-0 after:left-0 after:h-[1px] after:w-0 group-hover:after:w-full after:bg-current after:transition-all after:duration-300">
-                  Join the Society <span className="ml-2 transition-transform duration-200 group-hover:translate-x-1">→</span>
-                </Link>
               </div>
             </BorderGlow>
           </ScrollRevealCard>

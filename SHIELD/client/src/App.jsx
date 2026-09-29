@@ -174,30 +174,23 @@ function App() {
                 </div>
               </div>
 
-              <div className="space-y-5">
-                <h4 className="text-white font-semibold tracking-wider text-sm uppercase">
-                  Connect
-                </h4>
-                <div className="flex flex-col gap-3">
-                  <Link
-                    to="/team"
-                    className="text-gray-400 hover:text-white transition-colors text-sm"
-                  >
-                    Our Team
-                  </Link>
-                  <Link
-                    to="/contact"
-                    className="text-gray-400 hover:text-white transition-colors text-sm"
-                  >
-                    Contact Us
-                  </Link>
-                  <Link
-                    to="/contact"
-                    className="text-gray-400 hover:text-[#61dca3] transition-colors text-sm"
-                  >
-                    Join the Society
-                  </Link>
-                </div>
+            <div className="space-y-5">
+              <h4 className="text-white font-semibold tracking-wider text-sm uppercase">
+                Connect
+              </h4>
+              <div className="flex flex-col gap-3">
+                <Link
+                  to="/team"
+                  className="text-gray-400 hover:text-white transition-colors text-sm"
+                >
+                  Our Team
+                </Link>
+                <Link
+                  to="/contact"
+                  className="text-gray-400 hover:text-white transition-colors text-sm"
+                >
+                  Contact Us
+                </Link>
               </div>
             </div>
 
