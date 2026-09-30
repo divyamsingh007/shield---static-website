@@ -104,7 +104,7 @@ const Domains = () => {
   });
 
   return (
-    <main className="bg-neutral-950 min-h-screen text-white pt-32 pb-24 px-6 sm:px-12 md:px-24">
+    <main className="site-page bg-neutral-950 min-h-screen text-white pt-32 pb-24 px-6 sm:px-12 md:px-24">
       <div className="max-w-7xl mx-auto flex flex-col gap-12">
         
         {/* Header Section */}
@@ -169,9 +169,12 @@ const Domains = () => {
                     </div>
 
                     {/* Explore Scope Link */}
-                    <a href="#" className="mt-10 relative text-[#61b3dc] group-hover:text-white font-medium inline-flex items-center transition-colors pb-0.5 after:absolute after:bottom-0 after:left-0 after:h-[1px] after:w-0 group-hover:after:w-full after:bg-current after:transition-all after:duration-300 text-sm">
-                      Explore Scope <span className="ml-2 transition-transform duration-300 group-hover:translate-x-1">→</span>
-                    </a>
+                    <span
+                      aria-disabled="true"
+                      className="mt-10 inline-flex cursor-not-allowed items-center text-sm font-medium text-[#61b3dc]/40"
+                    >
+                      Explore Scope <span className="ml-2">→</span>
+                    </span>
                   </div>
                 </BorderGlow>
               </ScrollRevealCard>

@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import {
   BrowserRouter,
   Routes,
@@ -64,12 +64,33 @@ const navItems = [
 ];
 
 function App() {
+  const footerRef = useRef(null);
+  const [isFooterVisible, setIsFooterVisible] = useState(false);
+
+  useEffect(() => {
+    const footer = footerRef.current;
+    if (!footer) return;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setIsFooterVisible(true);
+          observer.disconnect();
+        }
+      },
+      { threshold: 0.15 },
+    );
+
+    observer.observe(footer);
+    return () => observer.disconnect();
+  }, []);
+
   return (
     <ClerkProvider publishableKey={CLERK_PUBLISHABLE_KEY}>
       <BrowserRouter>
         <ScrollToTop />
         <div className="relative min-h-screen bg-neutral-950 flex flex-col">
-          <div className="fixed top-0 w-full z-9999">
+          <div className="site-navbar fixed top-0 w-full z-9999">
             <CardNav
               logoAlt="SHIELD"
               items={navItems}
@@ -82,7 +103,7 @@ function App() {
           </div>
 
           {/* Floating Vertical Social Bar (Right Side) */}
-          <div className="fixed right-6 top-1/2 -translate-y-1/2 z-40 hidden sm:flex flex-col gap-6 bg-[#0a0a0a]/80 border border-white/10 backdrop-blur-md px-2.5 py-8 rounded-full items-center shadow-xl">
+          <div className="site-social-bar fixed right-6 top-1/2 -translate-y-1/2 z-40 hidden sm:flex flex-col gap-6 bg-[#0a0a0a]/80 border border-white/10 backdrop-blur-md px-2.5 py-8 rounded-full items-center shadow-xl">
             <a
               href="#"
               className="text-gray-400 hover:text-[#61dca3] transition-colors font-mono text-xs tracking-widest uppercase"
@@ -129,7 +150,12 @@ function App() {
           </div>
 
           {/* Professional Standard Footer */}
-          <footer className="w-full bg-[#050505] border-t border-white/5 pt-16 pb-8 px-6 sm:px-12 md:px-24 mt-auto relative z-10">
+          <footer
+            ref={footerRef}
+            className={`site-footer w-full bg-[#050505] border-t border-white/5 pt-16 pb-8 px-6 sm:px-12 md:px-24 mt-auto relative z-10 ${
+              isFooterVisible ? "is-visible" : ""
+            }`}
+          >
             <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-12 mb-12">
               <div className="md:col-span-2 space-y-4">
                 <h3 className="text-white text-3xl font-bold tracking-tight">
@@ -202,12 +228,18 @@ function App() {
                 reserved.
               </p>
               <div className="flex gap-6 text-sm text-gray-500">
-                <a href="#" className="hover:text-white transition-colors">
+                <span
+                  aria-disabled="true"
+                  className="cursor-not-allowed opacity-50"
+                >
                   Privacy Policy
-                </a>
-                <a href="#" className="hover:text-white transition-colors">
+                </span>
+                <span
+                  aria-disabled="true"
+                  className="cursor-not-allowed opacity-50"
+                >
                   Terms of Service
-                </a>
+                </span>
               </div>
             </div>
           </footer>

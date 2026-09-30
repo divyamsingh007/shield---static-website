@@ -90,6 +90,26 @@ const teamData = {
   
 };
 
+const visibleTeamGroups = [
+  teamData.faculty,
+  teamData.super_finalYear,
+  teamData.finalYear,
+  teamData.thirdYear,
+  teamData.secondYear,
+];
+
+const totalMembers = visibleTeamGroups.reduce(
+  (total, group) => total + group.length,
+  0,
+);
+
+const teamStats = [
+  { value: totalMembers, label: "Members" },
+  { value: teamData.faculty.length, label: "Faculty Mentor" },
+  { value: totalMembers - teamData.faculty.length, label: "Student Members" },
+  { value: visibleTeamGroups.length - 1, label: "Student Cohorts" },
+];
+
 // ─── Team Member Card ────────────────────────────────────────
 const TeamCard = ({ member, index }) => (
   <ScrollRevealCard delay={(index % 3) * 150}>
@@ -163,7 +183,7 @@ const TeamSection = ({ label, title, members }) => (
 // ─── Main Team Page ──────────────────────────────────────────
 const Team = () => {
   return (
-    <main className="bg-neutral-950 min-h-screen text-white pt-32 pb-24 px-6 sm:px-12 md:px-24">
+    <main className="site-page bg-neutral-950 min-h-screen text-white pt-32 pb-24 px-6 sm:px-12 md:px-24">
       <div className="max-w-7xl mx-auto flex flex-col gap-24">
 
         {/* Hero Section */}
@@ -181,6 +201,27 @@ const Team = () => {
           <p className="text-gray-400 text-lg sm:text-xl max-w-2xl leading-relaxed border-l-2 border-[#61b3dc]/50 pl-4">
             From guiding research tracks to leading CTF campaigns, every member plays a vital role in the SHIELD initiative.
           </p>
+        </section>
+
+        {/* Roster Snapshot */}
+        <section className="grid grid-cols-2 sm:grid-cols-4 border-y border-white/10 bg-white/[0.03]">
+          {teamStats.map((stat, index) => (
+            <div
+              key={stat.label}
+              className={`px-5 py-6 sm:px-8 sm:py-7 ${
+                index % 2 === 1 ? "border-l border-white/10" : ""
+              } ${
+                index > 0 ? "sm:border-l sm:border-white/10" : ""
+              }`}
+            >
+              <p className="text-2xl sm:text-3xl font-bold text-[#61dca3]">
+                {stat.value}
+              </p>
+              <p className="mt-2 text-[10px] sm:text-xs font-mono uppercase tracking-widest text-gray-500">
+                {stat.label}
+              </p>
+            </div>
+          ))}
         </section>
 
         {/* Faculty Incharge */}

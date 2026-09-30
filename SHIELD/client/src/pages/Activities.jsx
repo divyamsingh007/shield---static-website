@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import { useUser, SignInButton } from "@clerk/clerk-react";
+import { FaWhatsapp } from "react-icons/fa6";
 import { supabase } from "../lib/supabaseClient";
 
 const createPlayerDetails = () => ({
@@ -38,6 +39,8 @@ const domainOptions = [
 
 const NITH_EMAIL_PATTERN = String.raw`^26[a-z]{3}\d{3}@nith\.ac\.in$`;
 const REGISTER_AFTER_SIGN_IN_KEY = "shield-register-after-sign-in";
+const WHATSAPP_GROUP_URL = "https://chat.whatsapp.com/DBcPCGE8zpw14qrL4nIvlZ"
+  import.meta.env.VITE_WHATSAPP_GROUP_URL || "https://chat.whatsapp.com/";
 
 const Activities = () => {
   const { hash } = useLocation();
@@ -290,7 +293,7 @@ const Activities = () => {
   };
 
   return (
-    <main className="bg-neutral-950 min-h-screen text-white pt-32 pb-24 px-6 sm:px-12 md:px-24">
+    <main className="site-page bg-neutral-950 min-h-screen text-white pt-32 pb-24 px-6 sm:px-12 md:px-24">
       <div className="max-w-7xl mx-auto flex flex-col gap-24">
         {/* Top Hero Section */}
         <section className="flex flex-col gap-6 max-w-5xl">
@@ -337,7 +340,13 @@ const Activities = () => {
                 Cybersecurity 101: Hands-On Cybersecurity Introductry Workshop
               </h2>
               <p className="text-gray-400 text-lg leading-relaxed max-w-xl">
-                Cybersecurity 101 is a beginner-friendly, hands-on workshop introducing the fundamentals of cybersecurity through practical learning, covering cyber threats, network security, ethical hacking, vulnerabilities, authentication, and basic security practices. Participants will learn how attacks occur, how vulnerabilities are identified, and how systems can be protected.
+                Cybersecurity 101 is a beginner-friendly, hands-on workshop
+                introducing the fundamentals of cybersecurity through practical
+                learning, covering cyber threats, network security, ethical
+                hacking, vulnerabilities, authentication, and basic security
+                practices. Participants will learn how attacks occur, how
+                vulnerabilities are identified, and how systems can be
+                protected.
               </p>
 
               <div className="flex flex-col sm:flex-row gap-6 sm:gap-10 pt-2 border-l-2 border-white/10 pl-4">
@@ -359,24 +368,37 @@ const Activities = () => {
                 </div>
               </div>
 
-              <div className="pt-4">
+              <div className="flex flex-wrap items-center gap-3 pt-4">
                 {isSignedIn ? (
-                  <button
-                    type="button"
-                    onClick={() => {
-                      if (!existingRegistration) setIsRegisterOpen(true);
-                    }}
-                    disabled={Boolean(existingRegistration)}
-                    className={`px-8 py-3.5 font-bold rounded transition-colors shadow-lg ${
-                      existingRegistration
-                        ? "bg-white/10 text-gray-500 cursor-not-allowed"
-                        : "bg-[#61dca3] text-neutral-950 hover:bg-[#4fbe8b] cursor-pointer"
-                    }`}
-                  >
-                    {existingRegistration
-                      ? "Already registered"
-                      : "Register Now"}
-                  </button>
+                  <>
+                    <button
+                      type="button"
+                      onClick={() => {
+                        if (!existingRegistration) setIsRegisterOpen(true);
+                      }}
+                      disabled={Boolean(existingRegistration)}
+                      className={`px-8 py-3.5 font-bold rounded transition-colors shadow-lg ${
+                        existingRegistration
+                          ? "bg-white/10 text-gray-500 cursor-not-allowed"
+                          : "bg-[#61dca3] text-neutral-950 hover:bg-[#4fbe8b] cursor-pointer"
+                      }`}
+                    >
+                      {existingRegistration
+                        ? "Already registered"
+                        : "Register Now"}
+                    </button>
+                    {existingRegistration && (
+                      <a
+                        href={WHATSAPP_GROUP_URL}
+                        target="_blank"
+                        rel="noreferrer"
+                        className="inline-flex items-center gap-2 rounded border border-[#61b3dc]/60 px-5 py-3.5 font-bold text-[#b9e7ff] transition-colors hover:border-[#61b3dc] hover:bg-[#61b3dc]/10 hover:text-white"
+                      >
+                        <FaWhatsapp aria-hidden="true" size={20} />
+                        Join WhatsApp group
+                      </a>
+                    )}
+                  </>
                 ) : (
                   <SignInButton mode="modal">
                     <button

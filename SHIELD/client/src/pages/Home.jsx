@@ -34,12 +34,29 @@ const ScrollRevealCard = ({ children, delay = 0 }) => {
   );
 };
 
-const Home = () => (
-  <main className="bg-neutral-950 min-h-screen">
+const Home = () => {
+  const [isHeroVisible, setIsHeroVisible] = useState(false);
+
+  useEffect(() => {
+    const frame = requestAnimationFrame(() => setIsHeroVisible(true));
+    return () => cancelAnimationFrame(frame);
+  }, []);
+
+  const heroReveal = (delay) => ({
+    style: { transitionDelay: `${delay}ms` },
+    className: `transition-all duration-1000 ease-out motion-reduce:transition-none motion-reduce:transform-none ${
+      isHeroVisible
+        ? 'opacity-100 translate-y-0'
+        : 'opacity-0 translate-y-3'
+    }`,
+  });
+
+  return (
+    <main className="site-page bg-neutral-950 min-h-screen">
     {/* Hero Section */}
     <div className="w-full h-screen relative overflow-hidden">
       {/* Animated Glitch Background */}
-      <div className="absolute inset-0 z-0">
+      <div className="home-background-fade absolute inset-0 z-0">
         <LetterGlitch
           glitchSpeed={50}
           centerVignette={true}
@@ -56,11 +73,14 @@ const Home = () => (
       <div className="relative z-10 w-full h-full max-w-7xl mx-auto px-6 sm:px-12 md:px-24 flex flex-col justify-center pointer-events-none">
         <div className="max-w-2xl flex flex-col items-start text-left space-y-6 pt-20">
           
-          <p className="text-[#61dca3] font-mono text-sm tracking-wider uppercase">
+          <p
+            {...heroReveal(100)}
+            className={`${heroReveal(100).className} text-[#61dca3] font-mono text-sm tracking-wider uppercase`}
+          >
             NIT Hamirpur
           </p>
 
-          <div>
+          <div {...heroReveal(180)}>
             <h1 className="text-white text-5xl sm:text-6xl md:text-8xl font-bold tracking-tight">
               SHIELD
             </h1>
@@ -69,19 +89,31 @@ const Home = () => (
             </h2>
           </div>
 
-          <p className="text-xl md:text-2xl text-gray-300 font-medium leading-snug">
+          <p
+            {...heroReveal(280)}
+            className={`${heroReveal(280).className} text-xl md:text-2xl text-gray-300 font-medium leading-snug`}
+          >
             Society for Hacking Intelligence and Ethical Learning and Defense
           </p>
           
-          <p className="text-gray-400 text-base md:text-lg">
+          <p
+            {...heroReveal(360)}
+            className={`${heroReveal(360).className} text-gray-400 text-base md:text-lg`}
+          >
             People · Ideas · A Safer Digital World
           </p>
 
-          <p className="text-gray-400 text-base md:text-lg leading-relaxed max-w-xl">
+          <p
+            {...heroReveal(440)}
+            className={`${heroReveal(440).className} text-gray-400 text-base md:text-lg leading-relaxed max-w-xl`}
+          >
             A community focused on learning, ethical security research, practical problem solving, and building a safer digital world.
           </p>
 
-          <div className="pt-6 flex flex-wrap gap-4 pointer-events-auto">
+          <div
+            {...heroReveal(540)}
+            className={`${heroReveal(540).className} pt-6 flex flex-wrap gap-4 pointer-events-auto`}
+          >
             <Link 
               to="/activities#latest-events" 
               className="px-6 py-3 bg-[#61dca3] text-neutral-950 font-semibold rounded transition-colors duration-200 hover:bg-[#4fbe8b]"
@@ -200,6 +232,7 @@ const Home = () => (
       </div>
     </div>
   </main>
-);
+  );
+};
 
 export default Home;
