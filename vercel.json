@@ -1,0 +1,11 @@
+{
+  "installCommand": "npm --prefix SHIELD/client install",
+  "buildCommand": "npm --prefix SHIELD/client run build",
+  "outputDirectory": "SHIELD/client/dist",
+  "rewrites": [
+    {
+      "source": "/(.*)",
+      "destination": "/index.html"
+    }
+  ]
+}
