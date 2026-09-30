@@ -194,6 +194,8 @@ function App() {
               </div>
             </div>
 
+            </div>
+
             <div className="max-w-7xl mx-auto pt-8 border-t border-white/10 flex flex-col md:flex-row items-center justify-between gap-4">
               <p className="text-gray-500 text-sm">
                 © {new Date().getFullYear()} SHIELD Cyber Society. All rights

@@ -334,12 +334,10 @@ const Activities = () => {
                 </span>
               </div>
               <h2 className="text-3xl sm:text-4xl font-bold tracking-tight text-white leading-tight">
-                Cybersecurity 101: Hands-On Defensive Workshop
+                Cybersecurity 101: Hands-On Cybersecurity Introductry Workshop
               </h2>
               <p className="text-gray-400 text-lg leading-relaxed max-w-xl">
-                Join us for an intensive, beginner-friendly workshop covering
-                the absolute fundamentals of network defense, web
-                vulnerabilities, and secure coding practices.
+                Cybersecurity 101 is a beginner-friendly, hands-on workshop introducing the fundamentals of cybersecurity through practical learning, covering cyber threats, network security, ethical hacking, vulnerabilities, authentication, and basic security practices. Participants will learn how attacks occur, how vulnerabilities are identified, and how systems can be protected.
               </p>
 
               <div className="flex flex-col sm:flex-row gap-6 sm:gap-10 pt-2 border-l-2 border-white/10 pl-4">
@@ -348,7 +346,7 @@ const Activities = () => {
                     Date & Time
                   </span>
                   <span className="text-gray-200 font-mono text-sm">
-                    Oct 02, 2029 • 10:00 AM
+                    Oct 02, 2029
                   </span>
                 </div>
                 <div className="flex flex-col">
@@ -356,7 +354,7 @@ const Activities = () => {
                     Location
                   </span>
                   <span className="text-gray-200 font-mono text-sm">
-                    Computer Center, NIT Hamirpur
+                    New Lecture Hall, NIT Hamirpur
                   </span>
                 </div>
               </div>
