@@ -38,14 +38,14 @@ const ScrollRevealCard = ({ children, delay = 0 }) => {
 const teamData = {
   faculty: [
     {
-      name: "Dr.Mohit Kumar",
+      name: "Dr. Mohit Kumar",
       role: "Faculty Incharge",
       id: "FAC-001",
       image:
         "https://upload.wikimedia.org/wikipedia/commons/8/89/Portrait_Placeholder.png?utm_source=commons.wikimedia.org&utm_campaign=index&utm_content=original",
     },
     {
-      name: "Dr. Ashwani Kumar Sharma",
+      name: "Er. Ashwani Kumar Sharma",
       role: "Technical Advisor",
       id: "FAC-003",
       image:
