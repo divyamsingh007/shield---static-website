@@ -22,6 +22,7 @@ const CLERK_PUBLISHABLE_KEY =
   import.meta.env.VITE_CLERK_PUBLISHABLE_KEY ||
   import.meta.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY ||
   "pk_test_YXdhaXRlZC1jYW1lbC00ODc2LmNsZXJrLmFjY291bnRzLmRldiQ";
+const CURRENT_YEAR = new Date().getFullYear();
 
 const ScrollToTop = () => {
   const { pathname } = useLocation();
@@ -162,9 +163,8 @@ function App() {
                   SHIELD
                 </h3>
                 <p className="text-gray-400 max-w-sm leading-relaxed">
-                  Society for Hacking Intelligence and Ethical Learning and
-                  Defense. A community of ethical hackers and security
-                  researchers at NIT Hamirpur.
+                  A community of ethical hackers and security researchers at NIT
+                  Hamirpur.
                 </p>
               </div>
 
@@ -200,32 +200,30 @@ function App() {
                 </div>
               </div>
 
-            <div className="space-y-5">
-              <h4 className="text-white font-semibold tracking-wider text-sm uppercase">
-                Connect
-              </h4>
-              <div className="flex flex-col gap-3">
-                <Link
-                  to="/team"
-                  className="text-gray-400 hover:text-white transition-colors text-sm"
-                >
-                  Our Team
-                </Link>
-                <Link
-                  to="/contact"
-                  className="text-gray-400 hover:text-white transition-colors text-sm"
-                >
-                  Contact Us
-                </Link>
+              <div className="space-y-5">
+                <h4 className="text-white font-semibold tracking-wider text-sm uppercase">
+                  Connect
+                </h4>
+                <div className="flex flex-col gap-3">
+                  <Link
+                    to="/team"
+                    className="text-gray-400 hover:text-white transition-colors text-sm"
+                  >
+                    Our Team
+                  </Link>
+                  <Link
+                    to="/contact"
+                    className="text-gray-400 hover:text-white transition-colors text-sm"
+                  >
+                    Contact Us
+                  </Link>
+                </div>
               </div>
-            </div>
-
             </div>
 
             <div className="max-w-7xl mx-auto pt-8 border-t border-white/10 flex flex-col md:flex-row items-center justify-between gap-4">
               <p className="text-gray-500 text-sm">
-                © {new Date().getFullYear()} SHIELD Cyber Society. All rights
-                reserved.
+                © {CURRENT_YEAR} SHIELD Cyber Society. All rights reserved.
               </p>
               <div className="flex gap-6 text-sm text-gray-500">
                 <span

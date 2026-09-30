@@ -21,8 +21,12 @@ const AuthModal = () => {
   // Auto-close modal when user signs in successfully
   React.useEffect(() => {
     if (user && isAuthModalOpen) {
+      // Auth state is the external source that closes the modal.
+      // eslint-disable-next-line react/set-state-in-effect
       setIsAuthModalOpen(false);
+      // eslint-disable-next-line react/set-state-in-effect
       setErrorMsg("");
+      // eslint-disable-next-line react/set-state-in-effect
       setSuccessMsg("");
     }
   }, [user, isAuthModalOpen, setIsAuthModalOpen]);
@@ -47,7 +51,9 @@ const AuthModal = () => {
     if (mode === "signin") {
       const { data, error } = await signInWithEmail(email, password);
       if (error) {
-        setErrorMsg(error.message || "Failed to sign in. Please check your credentials.");
+        setErrorMsg(
+          error.message || "Failed to sign in. Please check your credentials.",
+        );
       } else if (data?.user) {
         setIsAuthModalOpen(false);
       }
@@ -55,13 +61,21 @@ const AuthModal = () => {
       const { data, error } = await signUpWithEmail(email, password);
       if (error) {
         setErrorMsg(error.message || "Failed to create account.");
-      } else if (data?.user && data.user.identities && data.user.identities.length === 0) {
-        setErrorMsg("An account with this email already exists. Please switch to Sign In.");
+      } else if (
+        data?.user &&
+        data.user.identities &&
+        data.user.identities.length === 0
+      ) {
+        setErrorMsg(
+          "An account with this email already exists. Please switch to Sign In.",
+        );
       } else if (data?.session) {
         // Direct login without confirmation required
         setIsAuthModalOpen(false);
       } else {
-        setSuccessMsg("Account created! Please check your email inbox to confirm your address before signing in.");
+        setSuccessMsg(
+          "Account created! Please check your email inbox to confirm your address before signing in.",
+        );
       }
     }
     setLoading(false);

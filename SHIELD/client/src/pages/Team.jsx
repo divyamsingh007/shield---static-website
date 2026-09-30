@@ -1,6 +1,5 @@
-import React, { useState, useRef, useEffect } from 'react';
-import BorderGlow from '../components/BorderGlow';
-import { FaGithub, FaLinkedinIn, FaXTwitter } from 'react-icons/fa6';
+import React, { useState, useRef, useEffect } from "react";
+import BorderGlow from "../components/BorderGlow";
 
 const ScrollRevealCard = ({ children, delay = 0 }) => {
   const [isVisible, setIsVisible] = useState(false);
@@ -14,7 +13,7 @@ const ScrollRevealCard = ({ children, delay = 0 }) => {
           observer.unobserve(entry.target);
         }
       },
-      { threshold: 0.1, rootMargin: '0px 0px -50px 0px' }
+      { threshold: 0.1, rootMargin: "0px 0px -50px 0px" },
     );
     if (ref.current) observer.observe(ref.current);
     return () => observer.disconnect();
@@ -25,7 +24,9 @@ const ScrollRevealCard = ({ children, delay = 0 }) => {
       ref={ref}
       style={{ transitionDelay: `${delay}ms` }}
       className={`h-full transition-all duration-700 ease-out transform ${
-        isVisible ? 'opacity-100 scale-100 translate-y-0' : 'opacity-0 scale-95 translate-y-12'
+        isVisible
+          ? "opacity-100 scale-100 translate-y-0"
+          : "opacity-0 scale-95 translate-y-12"
       }`}
     >
       {children}
@@ -36,58 +37,239 @@ const ScrollRevealCard = ({ children, delay = 0 }) => {
 // ─── Team Data ───────────────────────────────────────────────
 const teamData = {
   faculty: [
-    { name: "Dr.Mohit Kumar", role: "Faculty Incharge", id: "FAC-001", image: "https://upload.wikimedia.org/wikipedia/commons/8/89/Portrait_Placeholder.png?utm_source=commons.wikimedia.org&utm_campaign=index&utm_content=original" },
+    {
+      name: "Dr.Mohit Kumar",
+      role: "Faculty Incharge",
+      id: "FAC-001",
+      image:
+        "https://upload.wikimedia.org/wikipedia/commons/8/89/Portrait_Placeholder.png?utm_source=commons.wikimedia.org&utm_campaign=index&utm_content=original",
+    },
+    {
+      name: "Dr. Ashwani Kumar Sharma",
+      role: "Technical Advisor",
+      id: "FAC-003",
+      image:
+        "https://upload.wikimedia.org/wikipedia/commons/8/89/Portrait_Placeholder.png?utm_source=commons.wikimedia.org&utm_campaign=index&utm_content=original",
+    },
   ],
   assistantFaculty: [
-    { name: "Dr. Grace Hopper", role: "Asst. Faculty Incharge", id: "FAC-002", image:"https://upload.wikimedia.org/wikipedia/commons/8/89/Portrait_Placeholder.png?utm_source=commons.wikimedia.org&utm_campaign=index&utm_content=original" },
+    {
+      name: "Dr. Grace Hopper",
+      role: "Asst. Faculty Incharge",
+      id: "FAC-002",
+      image:
+        "https://upload.wikimedia.org/wikipedia/commons/8/89/Portrait_Placeholder.png?utm_source=commons.wikimedia.org&utm_campaign=index&utm_content=original",
+    },
   ],
 
- super_finalYear: [
-    { name: "Avisheet Srivastava", role: "Founder", id: "22BDCS005", image: "https://upload.wikimedia.org/wikipedia/commons/8/89/Portrait_Placeholder.png?utm_source=commons.wikimedia.org&utm_campaign=index&utm_content=original" },
-    { name: "Abhimanyu Singh", role: "Founder", id: "22DCS001", image: "https://upload.wikimedia.org/wikipedia/commons/8/89/Portrait_Placeholder.png?utm_source=commons.wikimedia.org&utm_campaign=index&utm_content=original" },
-    { name: "Kunal Dhiman", role: "Founder", id: "22DCS012", image: "https://upload.wikimedia.org/wikipedia/commons/8/89/Portrait_Placeholder.png?utm_source=commons.wikimedia.org&utm_campaign=index&utm_content=original" },
-    { name: "Sankalp Gupta", role: "Founder", id: "22DCS023", image: "https://upload.wikimedia.org/wikipedia/commons/8/89/Portrait_Placeholder.png?utm_source=commons.wikimedia.org&utm_campaign=index&utm_content=original" },
-    
-    { name: "Shibhu", role: "Founder", id: "22DCS026", image: "https://upload.wikimedia.org/wikipedia/commons/8/89/Portrait_Placeholder.png?utm_source=commons.wikimedia.org&utm_campaign=index&utm_content=original" },],
-    finalYear:[
-      { name: "Nimish Saxena", role: "Coordinator", id: "23BEC068", image: "https://upload.wikimedia.org/wikipedia/commons/8/89/Portrait_Placeholder.png?utm_source=commons.wikimedia.org&utm_campaign=index&utm_content=original" },
-    
-  
-    ],
-  
+  super_finalYear: [
+    {
+      name: "Avisheet Srivastava",
+      role: "Founder",
+      id: "22BDCS005",
+      image:
+        "https://upload.wikimedia.org/wikipedia/commons/8/89/Portrait_Placeholder.png?utm_source=commons.wikimedia.org&utm_campaign=index&utm_content=original",
+    },
+    {
+      name: "Abhimanyu Singh",
+      role: "Founder",
+      id: "22DCS001",
+      image:
+        "https://upload.wikimedia.org/wikipedia/commons/8/89/Portrait_Placeholder.png?utm_source=commons.wikimedia.org&utm_campaign=index&utm_content=original",
+    },
+    {
+      name: "Kunal Dhiman",
+      role: "Founder",
+      id: "22DCS012",
+      image:
+        "https://upload.wikimedia.org/wikipedia/commons/8/89/Portrait_Placeholder.png?utm_source=commons.wikimedia.org&utm_campaign=index&utm_content=original",
+    },
+    {
+      name: "Sankalp Gupta",
+      role: "Founder",
+      id: "22DCS023",
+      image:
+        "https://upload.wikimedia.org/wikipedia/commons/8/89/Portrait_Placeholder.png?utm_source=commons.wikimedia.org&utm_campaign=index&utm_content=original",
+    },
+
+    {
+      name: "Shibhu",
+      role: "Founder",
+      id: "22DCS026",
+      image:
+        "https://upload.wikimedia.org/wikipedia/commons/8/89/Portrait_Placeholder.png?utm_source=commons.wikimedia.org&utm_campaign=index&utm_content=original",
+    },
+  ],
+  finalYear: [
+    {
+      name: "Nimish Saxena",
+      role: "Coordinator",
+      id: "23BEC068",
+      image:
+        "https://upload.wikimedia.org/wikipedia/commons/8/89/Portrait_Placeholder.png?utm_source=commons.wikimedia.org&utm_campaign=index&utm_content=original",
+    },
+  ],
+
   thirdYear: [
-    { name: "Ankit Kumar", role: "Domain Lead", id: "24BCS018", image: "https://upload.wikimedia.org/wikipedia/commons/8/89/Portrait_Placeholder.png?utm_source=commons.wikimedia.org&utm_campaign=index&utm_content=original" },
-    { name: "Divyam Singh Duhoon", role: "Domain Lead", id: "24BCS041", image: "https://upload.wikimedia.org/wikipedia/commons/8/89/Portrait_Placeholder.png?utm_source=commons.wikimedia.org&utm_campaign=index&utm_content=original" },
-    { name: "Rajat Aggarwal", role: "Domain Lead", id: "24BCS090", image: "https://upload.wikimedia.org/wikipedia/commons/8/89/Portrait_Placeholder.png?utm_source=commons.wikimedia.org&utm_campaign=index&utm_content=original" },
-    { name: "Ravi Kumar Verma", role: "Domain Lead", id: "24BCS096", image: "https://upload.wikimedia.org/wikipedia/commons/8/89/Portrait_Placeholder.png?utm_source=commons.wikimedia.org&utm_campaign=index&utm_content=original" },
-    { name: "Aditya Chhimpa", role: "Domain Lead", id: "24BEC007", image: "https://upload.wikimedia.org/wikipedia/commons/8/89/Portrait_Placeholder.png?utm_source=commons.wikimedia.org&utm_campaign=index&utm_content=original" },
-    { name: "Abhayraj Mishra", role: "Domain Lead", id: "24BME002", image: "https://upload.wikimedia.org/wikipedia/commons/8/89/Portrait_Placeholder.png?utm_source=commons.wikimedia.org&utm_campaign=index&utm_content=original" },
-    { name: "Aditya", role: "Domain Lead", id: "24BME005", image: "https://upload.wikimedia.org/wikipedia/commons/8/89/Portrait_Placeholder.png?utm_source=commons.wikimedia.org&utm_campaign=index&utm_content=original" },
+    {
+      name: "Ankit Kumar",
+      role: "Domain Lead",
+      id: "24BCS018",
+      image:
+        "https://upload.wikimedia.org/wikipedia/commons/8/89/Portrait_Placeholder.png?utm_source=commons.wikimedia.org&utm_campaign=index&utm_content=original",
+    },
+    {
+      name: "Divyam Singh Duhoon",
+      role: "Domain Lead",
+      id: "24BCS041",
+      image:
+        "https://upload.wikimedia.org/wikipedia/commons/8/89/Portrait_Placeholder.png?utm_source=commons.wikimedia.org&utm_campaign=index&utm_content=original",
+    },
+    {
+      name: "Rajat Aggarwal",
+      role: "Domain Lead",
+      id: "24BCS090",
+      image:
+        "https://upload.wikimedia.org/wikipedia/commons/8/89/Portrait_Placeholder.png?utm_source=commons.wikimedia.org&utm_campaign=index&utm_content=original",
+    },
+    {
+      name: "Ravi Kumar Verma",
+      role: "Domain Lead",
+      id: "24BCS096",
+      image:
+        "https://upload.wikimedia.org/wikipedia/commons/8/89/Portrait_Placeholder.png?utm_source=commons.wikimedia.org&utm_campaign=index&utm_content=original",
+    },
+    {
+      name: "Aditya Chhimpa",
+      role: "Domain Lead",
+      id: "24BEC007",
+      image:
+        "https://upload.wikimedia.org/wikipedia/commons/8/89/Portrait_Placeholder.png?utm_source=commons.wikimedia.org&utm_campaign=index&utm_content=original",
+    },
+    {
+      name: "Abhayraj Mishra",
+      role: "Domain Lead",
+      id: "24BME002",
+      image:
+        "https://upload.wikimedia.org/wikipedia/commons/8/89/Portrait_Placeholder.png?utm_source=commons.wikimedia.org&utm_campaign=index&utm_content=original",
+    },
+    {
+      name: "Aditya",
+      role: "Domain Lead",
+      id: "24BME005",
+      image:
+        "https://upload.wikimedia.org/wikipedia/commons/8/89/Portrait_Placeholder.png?utm_source=commons.wikimedia.org&utm_campaign=index&utm_content=original",
+    },
   ],
 
-
-  
   secondYear: [
-    { name: "Abanshika Sharma", role: "Executive", id: "25BCS003", image: "https://upload.wikimedia.org/wikipedia/commons/8/89/Portrait_Placeholder.png?utm_source=commons.wikimedia.org&utm_campaign=index&utm_content=original" },
-    { name: "Ansh Barnwal", role: "Executive", id: "25BCS026", image: "https://upload.wikimedia.org/wikipedia/commons/8/89/Portrait_Placeholder.png?utm_source=commons.wikimedia.org&utm_campaign=index&utm_content=original" },
-    { name: "Karan Yadav", role: "Executive", id: "25BCS059", image: "https://upload.wikimedia.org/wikipedia/commons/8/89/Portrait_Placeholder.png?utm_source=commons.wikimedia.org&utm_campaign=index&utm_content=original" },
-    { name: "Komal", role: "Executive", id: "25BCS063", image: "https://upload.wikimedia.org/wikipedia/commons/8/89/Portrait_Placeholder.png?utm_source=commons.wikimedia.org&utm_campaign=index&utm_content=original" },
-    { name: "Mayank", role: "Executive", id: "25BCS073", image: "https://upload.wikimedia.org/wikipedia/commons/8/89/Portrait_Placeholder.png?utm_source=commons.wikimedia.org&utm_campaign=index&utm_content=original" },
-    { name: "Rohit Bambar", role: "Executive", id: "25BCS091", image: "https://upload.wikimedia.org/wikipedia/commons/8/89/Portrait_Placeholder.png?utm_source=commons.wikimedia.org&utm_campaign=index&utm_content=original" },
-    
-    { name: "Tanuj Kumar", role: "Executive", id: "25BEC106", image: "https://upload.wikimedia.org/wikipedia/commons/8/89/Portrait_Placeholder.png?utm_source=commons.wikimedia.org&utm_campaign=index&utm_content=original" },
-    { name: "Mayank", role: "Executive", id: "25BEE066", image: "https://upload.wikimedia.org/wikipedia/commons/8/89/Portrait_Placeholder.png?utm_source=commons.wikimedia.org&utm_campaign=index&utm_content=original" }, 
-    { name: "Nikhil Acharya", role: "Executive", id: "25BME025", image: "https://upload.wikimedia.org/wikipedia/commons/8/89/Portrait_Placeholder.png?utm_source=commons.wikimedia.org&utm_campaign=index&utm_content=original" }, 
-    { name: "Soha Khan", role: "Executive", id: "25BME046", image: "https://upload.wikimedia.org/wikipedia/commons/8/89/Portrait_Placeholder.png?utm_source=commons.wikimedia.org&utm_campaign=index&utm_content=original" },
-    { name: "Suyash Singh", role: "Executive", id: "25BME048", image: "https://upload.wikimedia.org/wikipedia/commons/8/89/Portrait_Placeholder.png?utm_source=commons.wikimedia.org&utm_campaign=index&utm_content=original" }, 
-    { name: "Dev Garg", role: "Executive", id: "25BMS014", image: "https://upload.wikimedia.org/wikipedia/commons/8/89/Portrait_Placeholder.png?utm_source=commons.wikimedia.org&utm_campaign=index&utm_content=original" },
-    { name: "Pranab Mandal", role: "Executive", id: "25BMS033", image: "https://upload.wikimedia.org/wikipedia/commons/8/89/Portrait_Placeholder.png?utm_source=commons.wikimedia.org&utm_campaign=index&utm_content=original" },
-    { name: "Nishant Singh", role: "Executive", id: "25DEC011", image: "https://upload.wikimedia.org/wikipedia/commons/8/89/Portrait_Placeholder.png?utm_source=commons.wikimedia.org&utm_campaign=index&utm_content=original" }, 
-    { name: "Yashraj Saini", role: "Executive", id: "25DEC027", image: "https://upload.wikimedia.org/wikipedia/commons/8/89/Portrait_Placeholder.png?utm_source=commons.wikimedia.org&utm_campaign=index&utm_content=original" },
+    {
+      name: "Abanshika Sharma",
+      role: "Executive",
+      id: "25BCS003",
+      image:
+        "https://upload.wikimedia.org/wikipedia/commons/8/89/Portrait_Placeholder.png?utm_source=commons.wikimedia.org&utm_campaign=index&utm_content=original",
+    },
+    {
+      name: "Ansh Barnwal",
+      role: "Executive",
+      id: "25BCS026",
+      image:
+        "https://upload.wikimedia.org/wikipedia/commons/8/89/Portrait_Placeholder.png?utm_source=commons.wikimedia.org&utm_campaign=index&utm_content=original",
+    },
+    {
+      name: "Karan Yadav",
+      role: "Executive",
+      id: "25BCS059",
+      image:
+        "https://upload.wikimedia.org/wikipedia/commons/8/89/Portrait_Placeholder.png?utm_source=commons.wikimedia.org&utm_campaign=index&utm_content=original",
+    },
+    {
+      name: "Komal",
+      role: "Executive",
+      id: "25BCS063",
+      image:
+        "https://upload.wikimedia.org/wikipedia/commons/8/89/Portrait_Placeholder.png?utm_source=commons.wikimedia.org&utm_campaign=index&utm_content=original",
+    },
+    {
+      name: "Mayank",
+      role: "Executive",
+      id: "25BCS073",
+      image:
+        "https://upload.wikimedia.org/wikipedia/commons/8/89/Portrait_Placeholder.png?utm_source=commons.wikimedia.org&utm_campaign=index&utm_content=original",
+    },
+    {
+      name: "Rohit Bambar",
+      role: "Executive",
+      id: "25BCS091",
+      image:
+        "https://upload.wikimedia.org/wikipedia/commons/8/89/Portrait_Placeholder.png?utm_source=commons.wikimedia.org&utm_campaign=index&utm_content=original",
+    },
+
+    {
+      name: "Tanuj Kumar",
+      role: "Executive",
+      id: "25BEC106",
+      image:
+        "https://upload.wikimedia.org/wikipedia/commons/8/89/Portrait_Placeholder.png?utm_source=commons.wikimedia.org&utm_campaign=index&utm_content=original",
+    },
+    {
+      name: "Mayank",
+      role: "Executive",
+      id: "25BEE066",
+      image:
+        "https://upload.wikimedia.org/wikipedia/commons/8/89/Portrait_Placeholder.png?utm_source=commons.wikimedia.org&utm_campaign=index&utm_content=original",
+    },
+    {
+      name: "Nikhil Acharya",
+      role: "Executive",
+      id: "25BME025",
+      image:
+        "https://upload.wikimedia.org/wikipedia/commons/8/89/Portrait_Placeholder.png?utm_source=commons.wikimedia.org&utm_campaign=index&utm_content=original",
+    },
+    {
+      name: "Soha Khan",
+      role: "Executive",
+      id: "25BME046",
+      image:
+        "https://upload.wikimedia.org/wikipedia/commons/8/89/Portrait_Placeholder.png?utm_source=commons.wikimedia.org&utm_campaign=index&utm_content=original",
+    },
+    {
+      name: "Suyash Singh",
+      role: "Executive",
+      id: "25BME048",
+      image:
+        "https://upload.wikimedia.org/wikipedia/commons/8/89/Portrait_Placeholder.png?utm_source=commons.wikimedia.org&utm_campaign=index&utm_content=original",
+    },
+    {
+      name: "Dev Garg",
+      role: "Executive",
+      id: "25BMS014",
+      image:
+        "https://upload.wikimedia.org/wikipedia/commons/8/89/Portrait_Placeholder.png?utm_source=commons.wikimedia.org&utm_campaign=index&utm_content=original",
+    },
+    {
+      name: "Pranab Mandal",
+      role: "Executive",
+      id: "25BMS033",
+      image:
+        "https://upload.wikimedia.org/wikipedia/commons/8/89/Portrait_Placeholder.png?utm_source=commons.wikimedia.org&utm_campaign=index&utm_content=original",
+    },
+    {
+      name: "Nishant Singh",
+      role: "Executive",
+      id: "25DEC011",
+      image:
+        "https://upload.wikimedia.org/wikipedia/commons/8/89/Portrait_Placeholder.png?utm_source=commons.wikimedia.org&utm_campaign=index&utm_content=original",
+    },
+    {
+      name: "Yashraj Saini",
+      role: "Executive",
+      id: "25DEC027",
+      image:
+        "https://upload.wikimedia.org/wikipedia/commons/8/89/Portrait_Placeholder.png?utm_source=commons.wikimedia.org&utm_campaign=index&utm_content=original",
+    },
   ],
-  
-   
-  
 };
 
 const visibleTeamGroups = [
@@ -117,12 +299,12 @@ const TeamCard = ({ member, index }) => (
       className="h-full"
       backgroundColor="#0a0a0a"
       glowColor="150 65 62"
-      colors={['#61dca3', '#61b3dc', '#2b4539']}
+      colors={["#61dca3", "#61b3dc", "#2b4539"]}
       borderRadius={12}
     >
       <div className="h-full flex flex-col items-center p-8 group relative overflow-hidden">
         {/* Avatar */}
-        <div className="relative w-28 h-28 sm:w-32 sm:h-32 mb-6 rounded-full p-[2px] bg-gradient-to-br from-[#61dca3]/40 via-transparent to-[#61b3dc]/40 group-hover:from-[#61dca3]/80 group-hover:to-[#61b3dc]/80 transition-all duration-500">
+        <div className="relative w-28 h-28 sm:w-32 sm:h-32 mb-6 rounded-full p-0.5 bg-linear-to-br from-[#61dca3]/40 via-transparent to-[#61b3dc]/40 group-hover:from-[#61dca3]/80 group-hover:to-[#61b3dc]/80 transition-all duration-500">
           <div className="w-full h-full rounded-full overflow-hidden bg-neutral-900">
             <img
               src={member.image}
@@ -151,9 +333,13 @@ const TeamCard = ({ member, index }) => (
         <div className="w-full border-t border-white/10 pt-4 mt-auto flex items-center justify-between">
           <div className="flex items-center gap-2">
             <span className="w-1.5 h-1.5 rounded-full bg-[#61dca3] animate-pulse"></span>
-            <span className="font-mono text-xs text-gray-500 tracking-wider">{member.id}</span>
+            <span className="font-mono text-xs text-gray-500 tracking-wider">
+              {member.id}
+            </span>
           </div>
-          <span className="font-mono text-[10px] text-gray-600 uppercase tracking-widest">SHIELD</span>
+          <span className="font-mono text-[10px] text-gray-600 uppercase tracking-widest">
+            SHIELD
+          </span>
         </div>
       </div>
     </BorderGlow>
@@ -185,7 +371,6 @@ const Team = () => {
   return (
     <main className="site-page bg-neutral-950 min-h-screen text-white pt-32 pb-24 px-6 sm:px-12 md:px-24">
       <div className="max-w-7xl mx-auto flex flex-col gap-24">
-
         {/* Hero Section */}
         <section className="flex flex-col gap-6 max-w-5xl">
           <p className="text-[#61dca3] font-mono text-sm tracking-wider uppercase mb-1">
@@ -196,23 +381,24 @@ const Team = () => {
           </h1>
           <div className="w-24 h-1 bg-[#61dca3] rounded mt-2"></div>
           <p className="text-xl sm:text-2xl text-gray-300 font-medium leading-snug max-w-4xl mt-4">
-            Meet the brilliant minds defending the digital frontier — dedicated faculty mentors and passionate students united by one mission: to secure tomorrow.
+            Meet the brilliant minds defending the digital frontier — dedicated
+            faculty mentors and passionate students united by one mission: to
+            secure tomorrow.
           </p>
           <p className="text-gray-400 text-lg sm:text-xl max-w-2xl leading-relaxed border-l-2 border-[#61b3dc]/50 pl-4">
-            From guiding research tracks to leading CTF campaigns, every member plays a vital role in the SHIELD initiative.
+            From guiding research tracks to leading CTF campaigns, every member
+            plays a vital role in the SHIELD initiative.
           </p>
         </section>
 
         {/* Roster Snapshot */}
-        <section className="grid grid-cols-2 sm:grid-cols-4 border-y border-white/10 bg-white/[0.03]">
+        <section className="grid grid-cols-2 sm:grid-cols-4 border-y border-white/10 bg-white/3">
           {teamStats.map((stat, index) => (
             <div
               key={stat.label}
               className={`px-5 py-6 sm:px-8 sm:py-7 ${
                 index % 2 === 1 ? "border-l border-white/10" : ""
-              } ${
-                index > 0 ? "sm:border-l sm:border-white/10" : ""
-              }`}
+              } ${index > 0 ? "sm:border-l sm:border-white/10" : ""}`}
             >
               <p className="text-2xl sm:text-3xl font-bold text-[#61dca3]">
                 {stat.value}
@@ -274,24 +460,24 @@ const Team = () => {
 
             <div className="relative z-10">
               <p className="text-[#61dca3] font-mono text-sm tracking-wider uppercase mb-3">
-                Open Recruitment
+                Recruitments Closed
               </p>
               <h2 className="text-3xl sm:text-4xl font-bold tracking-tight text-white mb-6">
                 Ready to join the ranks?
               </h2>
               <p className="text-gray-300 text-lg sm:text-xl leading-relaxed max-w-3xl mb-10">
-                We are always looking for passionate individuals who share a hunger for cybersecurity. Recruitments happen annually — bring your curiosity, we'll provide the battlefield.
+                Recruitment applications are currently closed. Follow SHIELD for
+                announcements about the next intake.
               </p>
-              <a
-                href="#"
-                className="inline-block px-6 py-3 bg-[#61dca3] text-neutral-950 font-semibold rounded transition-colors duration-200 hover:bg-[#4fbe8b]"
+              <span
+                aria-disabled="true"
+                className="inline-block cursor-not-allowed rounded bg-white/10 px-6 py-3 font-semibold text-gray-500"
               >
                 Apply Now
-              </a>
+              </span>
             </div>
           </div>
         </section>
-
       </div>
     </main>
   );

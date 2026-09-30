@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import { useUser, SignInButton } from "@clerk/clerk-react";
 import { FaWhatsapp } from "react-icons/fa6";
@@ -39,8 +39,9 @@ const domainOptions = [
 
 const NITH_EMAIL_PATTERN = String.raw`^26[a-z]{3}\d{3}@nith\.ac\.in$`;
 const REGISTER_AFTER_SIGN_IN_KEY = "shield-register-after-sign-in";
-const WHATSAPP_GROUP_URL = "https://chat.whatsapp.com/DBcPCGE8zpw14qrL4nIvlZ"
-  import.meta.env.VITE_WHATSAPP_GROUP_URL || "https://chat.whatsapp.com/";
+const WHATSAPP_GROUP_URL =
+  import.meta.env.VITE_WHATSAPP_GROUP_URL ||
+  "https://chat.whatsapp.com/DBcPCGE8zpw14qrL4nIvlZ";
 
 const Activities = () => {
   const { hash } = useLocation();
@@ -69,7 +70,7 @@ const Activities = () => {
   const [isLoadingReg, setIsLoadingReg] = useState(false);
 
   // Fetch registration for the authenticated user from Supabase
-  const fetchUserRegistration = async () => {
+  const fetchUserRegistration = useCallback(async () => {
     if (!user) return;
     setIsLoadingReg(true);
     try {
@@ -93,17 +94,21 @@ const Activities = () => {
     } finally {
       setIsLoadingReg(false);
     }
-  };
+  }, [user]);
 
   useEffect(() => {
     if (isSignedIn && user) {
+      // Registration state is synchronized from Supabase after auth changes.
+      // eslint-disable-next-line react/set-state-in-effect
       fetchUserRegistration();
     }
-  }, [isSignedIn, user, isRegisterOpen]);
+  }, [fetchUserRegistration, isRegisterOpen, isSignedIn, user]);
 
   // Sync Clerk authenticated user info into Player 1 details
   useEffect(() => {
     if (isSignedIn && user) {
+      // Clerk user data hydrates the registration form.
+      // eslint-disable-next-line react/set-state-in-effect
       setPlayer1((prev) => ({
         ...prev,
         fullName:
@@ -141,13 +146,18 @@ const Activities = () => {
 
   useEffect(() => {
     if (!isSignedIn) {
+      // Clear auth-bound state when Clerk signs the user out.
+      // eslint-disable-next-line react/set-state-in-effect
       setExistingRegistration(null);
 
       if (isRegisterOpen) {
+        // eslint-disable-next-line react/set-state-in-effect
         setIsRegisterOpen(false);
+        // eslint-disable-next-line react/set-state-in-effect
         setIsSubmitted(false);
       }
 
+      // eslint-disable-next-line react/set-state-in-effect
       setOpenRegistrationAfterSignIn(false);
     }
   }, [isSignedIn, isRegisterOpen]);
@@ -159,9 +169,11 @@ const Activities = () => {
 
     if (isSignedIn && user && shouldOpenAfterSignIn) {
       sessionStorage.removeItem(REGISTER_AFTER_SIGN_IN_KEY);
+      // eslint-disable-next-line react/set-state-in-effect
       setOpenRegistrationAfterSignIn(false);
 
       if (!existingRegistration) {
+        // eslint-disable-next-line react/set-state-in-effect
         setIsRegisterOpen(true);
       }
     }

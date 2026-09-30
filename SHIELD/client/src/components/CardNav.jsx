@@ -2,7 +2,12 @@ import { useLayoutEffect, useRef, useState } from "react";
 import { gsap } from "gsap";
 import { GoArrowUpRight } from "react-icons/go";
 import { Link, useNavigate } from "react-router-dom";
-import { SignedIn, SignedOut, SignInButton, UserButton } from "@clerk/clerk-react";
+import {
+  SignedIn,
+  SignedOut,
+  SignInButton,
+  UserButton,
+} from "@clerk/clerk-react";
 import "./CardNav.css";
 
 const CardNav = ({
@@ -41,7 +46,7 @@ const CardNav = ({
         contentEl.style.position = "static";
         contentEl.style.height = "auto";
 
-        contentEl.offsetHeight;
+        void contentEl.offsetHeight;
 
         const topBar = 60;
         const padding = 16;
@@ -143,6 +148,8 @@ const CardNav = ({
       document.removeEventListener("pointerdown", handlePointerDown);
       window.removeEventListener("scroll", handleScroll);
     };
+    // The listener effect intentionally tracks only the expanded state.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isExpanded]);
 
   const toggleMenu = () => {
@@ -224,7 +231,10 @@ const CardNav = ({
                   navigate("/activities#latest-events");
                 }}
                 className="card-nav-cta-button"
-                style={{ backgroundColor: buttonBgColor, color: buttonTextColor }}
+                style={{
+                  backgroundColor: buttonBgColor,
+                  color: buttonTextColor,
+                }}
               >
                 Get Started
               </button>
