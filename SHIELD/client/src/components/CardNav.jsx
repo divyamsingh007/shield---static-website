@@ -2,12 +2,6 @@ import { useLayoutEffect, useRef, useState } from "react";
 import { gsap } from "gsap";
 import { GoArrowUpRight } from "react-icons/go";
 import { Link, useNavigate } from "react-router-dom";
-import {
-  SignedIn,
-  SignedOut,
-  SignInButton,
-  UserButton,
-} from "@clerk/clerk-react";
 import "./CardNav.css";
 
 const CardNav = ({
@@ -215,53 +209,24 @@ const CardNav = ({
           </div>
 
           <div className="flex items-center gap-2.5">
-            <SignedOut>
-              <SignInButton mode="modal">
-                <button
-                  type="button"
-                  className="px-3.5 py-1.5 text-xs font-semibold text-gray-200 bg-white/10 hover:bg-white/20 border border-white/15 rounded-lg transition-all cursor-pointer"
-                >
-                  Sign In
-                </button>
-              </SignInButton>
-              <button
-                type="button"
-                onClick={() => {
-                  if (isExpanded) toggleMenu();
-                  navigate("/activities#latest-events");
-                }}
-                className="card-nav-cta-button"
-                style={{
-                  backgroundColor: buttonBgColor,
-                  color: buttonTextColor,
-                }}
-              >
-                Get Started
-              </button>
-            </SignedOut>
-
-            <SignedIn>
-              <button
-                type="button"
-                onClick={() => {
-                  if (isExpanded) toggleMenu();
-                  navigate("/activities#latest-events");
-                }}
-                className="px-3.5 py-1.5 text-xs font-bold bg-[#61dca3] text-black rounded-lg hover:bg-[#4fbe8b] transition-colors cursor-pointer"
-              >
-                Register Event
-              </button>
-              <div className="flex items-center pl-1">
-                <UserButton
-                  showName={false}
-                  appearance={{
-                    elements: {
-                      userButtonPopoverActionButton__manageAccount: "hidden",
-                    },
-                  }}
-                />
-              </div>
-            </SignedIn>
+            <button
+              type="button"
+              onClick={() => {
+                if (isExpanded) toggleMenu();
+                navigate("/activities#past-events");
+                const el = document.getElementById("past-events");
+                if (el) {
+                  el.scrollIntoView({ behavior: "smooth", block: "start" });
+                }
+              }}
+              className="card-nav-cta-button"
+              style={{
+                backgroundColor: buttonBgColor,
+                color: buttonTextColor,
+              }}
+            >
+              Past Events
+            </button>
           </div>
         </div>
 
@@ -281,7 +246,22 @@ const CardNav = ({
                     className="nav-card-link"
                     to={lnk.href || lnk.path}
                     aria-label={lnk.ariaLabel}
-                    onClick={() => toggleMenu()}
+                    onClick={() => {
+                      toggleMenu();
+                      const target = lnk.href || lnk.path || "";
+                      if (target.includes("#")) {
+                        const targetId = target.split("#")[1];
+                        setTimeout(() => {
+                          const el = document.getElementById(targetId);
+                          if (el) {
+                            el.scrollIntoView({
+                              behavior: "smooth",
+                              block: "start",
+                            });
+                          }
+                        }, 100);
+                      }
+                    }}
                   >
                     <GoArrowUpRight
                       className="nav-card-link-icon"

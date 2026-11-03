@@ -115,10 +115,10 @@ const Home = () => {
               className={`${heroReveal(540).className} pt-6 flex flex-wrap gap-4 pointer-events-auto`}
             >
               <Link
-                to="/activities#latest-events"
+                to="/activities"
                 className="px-6 py-3 bg-[#61dca3] text-neutral-950 font-semibold rounded transition-colors duration-200 hover:bg-[#4fbe8b]"
               >
-                Register for Event
+                Explore Activities
               </Link>
 
               <Link
